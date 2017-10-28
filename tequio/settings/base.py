@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'contacts.apps.ContactsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
