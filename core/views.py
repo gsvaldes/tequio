@@ -5,7 +5,7 @@ from django.views import View
 # Create your views here.
 
 
-class HomeView(View):
+class HomeView(LoginRequiredMixin, View):
     """
     holding view 
     """
