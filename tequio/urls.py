@@ -20,7 +20,7 @@ from core import urls as core_urls
 
 urlpatterns = [
     url(r'^', include(core_urls)),
-    url(r'^admin/', admin.site.urls),  
+    url(r'^admin/', admin.site.urls),
 ]
 
 #Add Django site authentication urls (for login, logout, password management)

@@ -26,6 +26,30 @@ or
 ``fab shelllocal``
 
 
+Users
++++++
+
+The ``TequioUser model`` subclasses Django's ``AbstractUser`` model, but does not yet add
+any additional fields or functionality.
+
+Contacts, Members, Volunteers, etc. are not tied to the User model.  It's
+expected that organization members who have access to the site, and hence have TequioUser record,
+are a limited subset of an organization's members and volunteers.
+
+User Creation
+-------------
+
+User creation is based in part on 
+http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.html
+and also https://medium.com/@khansubhan95/password-reset-in-django-8b4d37924958
+although, Tequio does not use django-authools itself.
+
+When a new TequioUser is created via the admin page, an initial random, 
+unknowable password is created and the new user is sent a password
+reset email. 
+
+
+
 Testing
 +++++++
 
