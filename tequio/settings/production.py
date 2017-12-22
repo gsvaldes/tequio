@@ -15,7 +15,7 @@ EMAIL_HOST_PASSWORD = env('MAILGUN_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-ADMINS = env('ADMINS')
+ADMINS = [('geoff', 'valdesgeoffrey@gmail.com')]
 SERVER_EMAIL = env('MAILGUN_USERNAME')
 
 
