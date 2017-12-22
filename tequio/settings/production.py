@@ -1,4 +1,7 @@
 from .base import *  # noqa
+
+import logging
+
 import dj_database_url
 
 DEBUG = False
@@ -23,3 +26,5 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']
+
+INSTALLED_APPS += ['gunicorn', ]
