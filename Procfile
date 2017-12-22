@@ -1,1 +1,1 @@
-web: gunicorn tequio.wsgi:application
+web: gunicorn tequio.wsgi:application --log-file -
