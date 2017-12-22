@@ -21,3 +21,5 @@ DATABASES = {
         default=env('DATABASE_URL')
     )
 }
+
+ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']
