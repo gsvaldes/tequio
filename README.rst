@@ -56,3 +56,30 @@ Testing
 Deployment
 ++++++++++
 
+Heroku Specific
+---------------
+
+``Procfile``
+``runtime.txt``
+
+
+Third Party Tools Used
+++++++++++++++++++++++
+
+Whitenoise
+----------
+
+http://whitenoise.evans.io/
+Purpose: Serve static files 
+Used in place on NGINX
+
+django-environ
+--------------
+
+https://django-environ.readthedocs.io
+Purpose: Make it easier to pull settings from ENV variables
+
+
+
+
+
