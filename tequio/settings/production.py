@@ -15,6 +15,8 @@ EMAIL_HOST_PASSWORD = env('MAILGUN_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+ADMINS = env('ADMINS')
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
