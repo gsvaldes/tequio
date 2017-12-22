@@ -87,22 +87,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tequio.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': env('TEQUIO_DB_NAME'),
-        'USER': env('TEQUIO_DB_USER'),
-        'PASSWORD': env('TEQUIO_DB_PASSWORD'),
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default. 
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
