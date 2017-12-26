@@ -1,6 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import password_validation
+from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth import password_validation, get_user_model
+
+
+User = get_user_model()
 
 
 class TequioUserCreationForm(UserCreationForm):
@@ -8,6 +11,14 @@ class TequioUserCreationForm(UserCreationForm):
     Based in part on http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.
     A UserCreationForm with optional password inputs.
     """
+    class Meta:
+        """
+        Identical to Meta from Django's UserCreationForm,
+        except using custom User model
+        """
+        model = User
+        fields = ("username",)
+        field_classes = {'username': UsernameField}
 
     def __init__(self, *args, **kwargs):
         super(TequioUserCreationForm, self).__init__(*args, **kwargs)
@@ -21,7 +32,8 @@ class TequioUserCreationForm(UserCreationForm):
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
+        # if password1 and password2 and password1 != password2:
+        if password1 != password2:
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',
