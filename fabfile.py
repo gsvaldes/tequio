@@ -12,3 +12,9 @@ def shelllocal():
     django shell with local settings
     """
     local('./manage.py shell --settings=tequio.settings.local')
+
+def test():
+    """
+    test with local settings
+    """
+    local('./manage.py test --settings=tequio.settings.local')
