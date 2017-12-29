@@ -1,5 +1,7 @@
 Welcome to Tequio.  In order to access the site, please
 update your password via the link below.
 
-Someone asked for password reset for email {{ email }}. Follow the link below:
+Your email: {{ email }}
+Your username: {{ user.get_username }}
+
 {{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}

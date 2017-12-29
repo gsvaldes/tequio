@@ -48,9 +48,9 @@ class Contact(models.Model):
     emails = models.ManyToManyField(Email, blank=True)
     created_by = models.ForeignKey(
         TequioUser,
-         related_name="contact_created_by",
-          on_delete=models.CASCADE,
-           blank=True
+        related_name="contact_created_by",
+        on_delete=models.CASCADE,
+        blank=True
     )
     created_on = models.DateTimeField(auto_now_add=True)
     last_updated_by = models.ForeignKey(
@@ -60,6 +60,8 @@ class Contact(models.Model):
         blank=True
     )
     last_updated_on = models.DateTimeField(auto_now=True)
+
+    member = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
