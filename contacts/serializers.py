@@ -4,6 +4,10 @@ from contacts.models import Contact, Address, Phone, Email
 from users.models import TequioUser
 
 
+class TequioException(Exception):
+    pass
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TequioUser
@@ -64,6 +68,64 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
             contact.phones.add(phone)
         
         return contact
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.member = validated_data.get('member', instance.member)
+        instance.last_updated_by = self.context['request'].user
+
+        instance.save()
+
+        addresses_data = validated_data.pop('addresses')
+        emails_data = validated_data.pop('emails')
+        phones_data = validated_data.pop('phones')
+
+        for address_data in addresses_data:
+            url = address_data.get('url')
+            if url:
+                try:
+                    address = Address.objects.get(url=url)
+                except Address.DoesNotExist:
+                    raise TequioException('address url: {0} does not exist'.format(url))
+                address.address = address_data.get('address', address.address)
+                address.street = address_data.get('street', address.street)
+                address.city = address_data.get('city', address.city)
+                address.state = address_data.get('state', address.state)
+                address.zip_code = address_data.get('zip_code', address.zip_code)
+                address.country = address_data.get('country', address.country)
+                address.save()
+            else:
+                address = Address.objects.create(**address_data)
+                instance.addresses.add(address)
+                
+        for email_data in emails_data:
+            url = email_data.get('url')
+            if url:
+                try:
+                    email = Email.objects.get(url=url)
+                except Email.DoesNotExist:
+                    raise TequioException('email url: {0} does not exist'.format(url))
+                email.email = email_data.get('email', email.email)
+                email.save()
+            else:
+                email = Email.objects.create(**email_data)
+                instance.emails.add(email)
+
+        for phone_data in phones_data:
+            url = phone_data.get('url')
+            if url:
+                try:
+                    phone = Phone.objects.get(url=url)
+                except Phone.DoesNotExist:
+                    raise TequioException('phone url: {0} does not exist'.format(url))
+                phone.number = phone_data.get('number', phone.number)
+                phone.save()
+            else:
+                phone = Phone.objects.create(**phone_data)
+                instance.phones.add(phone)
+
+
+        return instance
 
 
 
