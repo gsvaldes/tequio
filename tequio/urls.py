@@ -17,13 +17,16 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from core import urls as core_urls
+from contacts import urls as contact_urls
 
 urlpatterns = [
     url(r'^', include(core_urls)),
+    url(r'^contacts/', include(contact_urls)),
     url(r'^admin/', admin.site.urls),
 ]
 
 #Add Django site authentication urls (for login, logout, password management)
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    
 ]
