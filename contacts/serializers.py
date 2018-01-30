@@ -29,7 +29,8 @@ class PhoneSerializer(serializers.HyperlinkedModelSerializer):
 class EmailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Email
-        fields = '__all__'
+        fields = ('email', 'url', 'id')
+        extra_kwargs = {"id": {"required": False, "read_only": False}}
 
 
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
@@ -70,15 +71,37 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
         return contact
 
     def update(self, instance, validated_data):
+        addresses_data = validated_data.pop('addresses')
+        emails_data = validated_data.pop('emails')
+        instance_emails_mapping = {email.id: email for email in instance.emails.all()}
+        data_emails_mapping = {email_data['id']: email_data for email_data in emails_data}
+        phones_data = validated_data.pop('phones')
+        # addresses
+        emails = instance.emails.all()
+        emails = list(emails)
+        # phones
+
         instance.name = validated_data.get('name', instance.name)
         instance.member = validated_data.get('member', instance.member)
         instance.last_updated_by = self.context['request'].user
 
         instance.save()
 
-        addresses_data = validated_data.pop('addresses')
-        emails_data = validated_data.pop('emails')
-        phones_data = validated_data.pop('phones')
+        for email_id, email_data in data_emails_mapping.items():
+            email = instance_emails_mapping.get(email_id, None)
+            if email is None:
+                new_email = Email.objects.create(**email_data)
+                instance.emails.add(new_email)
+            else:
+                email.email = email_data.get('email', email.email)
+                email.save()
+
+        for email_id, email in instance_emails_mapping.items():
+            if email_id not in data_emails_mapping:
+                email.delete()
+                
+
+        
 
         for address_data in addresses_data:
             url = address_data.get('url')
@@ -97,19 +120,24 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
             else:
                 address = Address.objects.create(**address_data)
                 instance.addresses.add(address)
-                
-        for email_data in emails_data:
-            url = email_data.get('url')
-            if url:
-                try:
-                    email = Email.objects.get(url=url)
-                except Email.DoesNotExist:
-                    raise TequioException('email url: {0} does not exist'.format(url))
-                email.email = email_data.get('email', email.email)
-                email.save()
-            else:
-                email = Email.objects.create(**email_data)
-                instance.emails.add(email)
+            
+        # for email_data in emails_data:
+        #     # for email_data in emails_data:
+        #     #     email = emails.pop(0)
+        #     #     email.email = email_data.get('email', email.email)
+        #     #     email.save
+        #     # import pdb; pdb.set_trace()
+        #     id = email_data.get('id')
+        #     if id:
+        #         try:
+        #             email = Email.objects.get(id=id)
+        #         except Email.DoesNotExist:
+        #             raise TequioException('email id: {0} does not exist'.format(id))
+        #         email.email = email_data.get('email', email.email)
+        #         email.save()
+        #     else:
+        #         email = Email.objects.create(**email_data)
+        #         instance.emails.add(email)
 
         for phone_data in phones_data:
             url = phone_data.get('url')
