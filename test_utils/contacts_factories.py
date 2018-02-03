@@ -1,6 +1,12 @@
+"""
+model factories used for creating testing instances
+of Contact and related models
+see http://factoryboy.readthedocs.io/
+"""
 import factory
 
 from contacts.models import Address, Phone, Email, Contact
+
 
 class AddressFactory(factory.DjangoModelFactory):
     class Meta:

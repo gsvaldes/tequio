@@ -1,9 +1,13 @@
-from django.shortcuts import render
+"""
+API views for Contact and related models
+"""
 from rest_framework import viewsets
+
 from contacts.models import Contact, Address, Phone, Email
-from users.models import TequioUser
 from contacts.serializers import ContactSerializer, UserSerializer, \
     AddressSerializer, PhoneSerializer, EmailSerializer
+from users.models import TequioUser
+
 
 class ContactViewSet(viewsets.ModelViewSet):
     """
@@ -20,6 +24,7 @@ class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
+
 class PhoneViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows contacts to be viewed or edited.
@@ -27,12 +32,14 @@ class PhoneViewSet(viewsets.ModelViewSet):
     queryset = Phone.objects.all()
     serializer_class = PhoneSerializer
 
+
 class EmailViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows contacts to be viewed or edited.
     """
     queryset = Email.objects.all()
     serializer_class = EmailSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """

@@ -1,3 +1,6 @@
+"""
+settings used for deployed app
+"""
 from .base import *  # noqa
 
 import logging
@@ -15,7 +18,7 @@ EMAIL_HOST_PASSWORD = env('MAILGUN_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-ADMINS = [('geoff', 'valdesgeoffrey@gmail.com')]
+ADMINS = [('geoff', 'valdesgeoffrey@gmail.com')]  # TODO move to env variable
 SERVER_EMAIL = env('MAILGUN_USERNAME')
 
 
@@ -28,6 +31,6 @@ DATABASES = {
     )
 }
 
-ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']
+ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']  # TODO move to env variable
 
 INSTALLED_APPS += ['gunicorn', ]

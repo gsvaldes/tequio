@@ -2,11 +2,9 @@ from django.db import models
 
 from users.models import TequioUser
 
-# Create your models here.
 
 class Address(models.Model):
-    """
-    """
+    """Address"""
     address = models.CharField(max_length=100, blank=True)
     street = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
@@ -21,10 +19,11 @@ class Address(models.Model):
             city=self.city,
             state=self.state,
             zip=self.zip_code
-    )
+        )
 
 
 class Phone(models.Model):
+    """Phone"""
     number = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
@@ -32,6 +31,7 @@ class Phone(models.Model):
 
 
 class Email(models.Model):
+    """Email"""
     email = models.EmailField()
 
     def __str__(self):
@@ -40,6 +40,7 @@ class Email(models.Model):
 
 class Contact(models.Model):
     """
+    Contact
     """
     name = models.CharField(blank=True, max_length=255)
 
@@ -65,5 +66,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
-
-

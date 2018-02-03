@@ -8,7 +8,8 @@ User = get_user_model()
 
 class TequioUserCreationForm(UserCreationForm):
     """
-    Based in part on http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.
+    Based in part on
+    http://django-authtools.readthedocs.io/en/latest/how-to/invitation-email.
     A UserCreationForm with optional password inputs.
     """
     class Meta:
@@ -41,5 +42,6 @@ class TequioUserCreationForm(UserCreationForm):
         # only validate password if it has been provided
         if password2:
             self.instance.username = self.cleaned_data.get('username')
-            password_validation.validate_password(self.cleaned_data.get('password2'), self.instance)
+            password_validation.validate_password(
+                self.cleaned_data.get('password2'), self.instance)
         return password2

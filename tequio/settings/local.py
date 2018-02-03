@@ -1,3 +1,6 @@
+"""
+settings used for local development
+"""
 from .base import *  # noqa
 
 DEBUG = True
@@ -22,8 +25,8 @@ DATABASES = {
         'NAME': env('TEQUIO_DB_NAME'),
         'USER': env('TEQUIO_DB_USER'),
         'PASSWORD': env('TEQUIO_DB_PASSWORD'),
-        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',  # Set to empty string for default. 
+        # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'HOST': '',
+        'PORT': '',  # Set to empty string for default.
     }
 }
-

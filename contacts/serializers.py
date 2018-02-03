@@ -1,27 +1,36 @@
+"""
+Serializers for Contact and related models
+"""
 from rest_framework import serializers
 
 from contacts.models import Contact, Address, Phone, Email
 from users.models import TequioUser
 
 
-class TequioException(Exception):
-    pass
-
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """user serializer needed for ContactSerializer"""
     class Meta:
         model = TequioUser
         fields = ('url', 'username')
 
 
 class AddressSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    id added to extra_kwargs to allow updates and deletes via
+    ContactSerializer
+    """
     class Meta:
         model = Address
-        fields = ('address', 'street', 'city', 'state', 'zip_code', 'country', 'url', 'id')
+        fields = ('address', 'street', 'city', 'state',
+                  'zip_code', 'country', 'url', 'id')
         extra_kwargs = {"id": {"required": False, "read_only": False}}
 
 
 class PhoneSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    id added to extra_kwargs to allow updates and deletes via
+    ContactSerializer
+    """
     class Meta:
         model = Phone
         fields = ('number', 'url', 'id')
@@ -29,6 +38,10 @@ class PhoneSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EmailSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    id added to extra_kwargs to allow updates and deletes via
+    ContactSerializer
+    """
     class Meta:
         model = Email
         fields = ('email', 'url', 'id')
@@ -36,12 +49,16 @@ class EmailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    The Contact Serializer also updates the related
+    addresses, phones, and emails and updates the last_updated_by
+    field with the current logged user
+    """
     created_by = UserSerializer(read_only=True)
     last_updated_by = UserSerializer(read_only=True)
     emails = EmailSerializer(many=True)
     addresses = AddressSerializer(many=True)
     phones = PhoneSerializer(many=True)
-
 
     class Meta:
         model = Contact
@@ -69,26 +86,32 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
         for phone_data in phones_data:
             phone = Phone.objects.create(**phone_data)
             contact.phones.add(phone)
-        
+
         return contact
 
     def update(self, instance, validated_data):
         addresses_data = validated_data.pop('addresses')
-        instance_addresses_mapping = {address.id: address for address in instance.addresses.all()}
-        data_addresses_mapping = {address_data.get('id'): address_data for address_data in addresses_data}
+        instance_addresses_mapping = {
+            address.id: address for address in instance.addresses.all()}
+        data_addresses_mapping = {address_data.get(
+            'id'): address_data for address_data in addresses_data}
 
         emails_data = validated_data.pop('emails')
-        instance_emails_mapping = {email.id: email for email in instance.emails.all()}
-        data_emails_mapping = {email_data.get('id'): email_data for email_data in emails_data}
+        instance_emails_mapping = {
+            email.id: email for email in instance.emails.all()}
+        data_emails_mapping = {email_data.get(
+            'id'): email_data for email_data in emails_data}
 
         phones_data = validated_data.pop('phones')
-        instance_phones_mapping = {phone.id: phone for phone in instance.phones.all()}
-        data_phones_mapping = {phone_data.get('id'): phone_data for phone_data in phones_data}
+        instance_phones_mapping = {
+            phone.id: phone for phone in instance.phones.all()}
+        data_phones_mapping = {phone_data.get(
+            'id'): phone_data for phone_data in phones_data}
 
         instance.name = validated_data.get('name', instance.name)
         instance.member = validated_data.get('member', instance.member)
         instance.last_updated_by = self.context['request'].user
-        instance.save()     
+        instance.save()
 
         for address_id, address_data in data_addresses_mapping.items():
             address = instance_addresses_mapping.get(address_id, None)
@@ -100,7 +123,8 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                 address.street = address_data.get('street', address.street)
                 address.city = address_data.get('city', address.city)
                 address.state = address_data.get('state', address.state)
-                address.zip_code = address_data.get('zip_code', address.zip_code)
+                address.zip_code = address_data.get(
+                    'zip_code', address.zip_code)
                 address.country = address_data.get('country', address.country)
                 address.save()
 
@@ -135,10 +159,3 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                 phone.delete()
 
         return instance
-
-
-
-
-
-
-

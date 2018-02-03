@@ -32,19 +32,22 @@ NEW_CONTACT_DATA = {
 }
 
 
-
 class TestAddressViewSet(APITestCase):
     def setUp(self):
-        self.user = TequioUserFactory(username='Oswald')
+        self.user = TequioUserFactory(username='Anselmo')
         self.user.set_password('secret')
         self.user.save()
+        self.client.login(username='Anselmo', password='secret')
 
     def test_create_contact(self):
-        logged_in = self.client.login(username='Oswald', password='secret')
-        print(logged_in)
-        response = self.client.post(reverse('contact-list'), data=NEW_CONTACT_DATA, format='json')
-        # import pdb; pdb.set_trace()
+        """
+        posting valid data via the contact-list view should create a new contact
+        """
+        count = Contact.objects.count()
+        response = self.client.post(
+            reverse('contact-list'), data=NEW_CONTACT_DATA, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Contact.objects.count(), 1)
+        self.assertEqual(Contact.objects.count(), count + 1)
         self.assertEqual(Contact.objects.get().last_updated_by, self.user)
         self.assertEqual(Contact.objects.get().name, 'Ricardo Flores Magon')
+        # eee
