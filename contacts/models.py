@@ -51,14 +51,16 @@ class Contact(models.Model):
         TequioUser,
         related_name="contact_created_by",
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        null=True
     )
     created_on = models.DateTimeField(auto_now_add=True)
     last_updated_by = models.ForeignKey(
         TequioUser,
         related_name="contact_updated_by",
         on_delete=models.CASCADE,
-        blank=True
+        blank=True,
+        null=True
     )
     last_updated_on = models.DateTimeField(auto_now=True)
 

@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from test_utils.user_factories import TequioUserFactory
-from contacts.models import Contact
+from contacts.models import Contact, Address, Email, Phone
 
 
 NEW_CONTACT_DATA = {
@@ -31,6 +31,31 @@ NEW_CONTACT_DATA = {
     "member": False
 }
 
+NEW_CONTACT_DATA2 = {
+    "emails": [
+        {
+            "email": "tierra@libertad.org"
+        }
+    ],
+    "addresses": [
+        {
+            "address": "456",
+            "street": "Ahuizote Avenue",
+            "city": "New Haven",
+            "state": "CT",
+            "zip_code": "06511",
+            "country": "USA",
+        }
+    ],
+    "phones": [
+        {
+            "number": "7775551234",
+        }
+    ],
+    "name": "Enrique Flores Magon",
+    "member": False
+}
+
 
 class TestAddressViewSet(APITestCase):
     def setUp(self):
@@ -50,4 +75,77 @@ class TestAddressViewSet(APITestCase):
         self.assertEqual(Contact.objects.count(), count + 1)
         self.assertEqual(Contact.objects.get().last_updated_by, self.user)
         self.assertEqual(Contact.objects.get().name, 'Ricardo Flores Magon')
-        # eee
+
+    def test_update_existing_contact(self):
+        """
+        Update the Contact fields and related email, address, and phone
+        fields
+        """
+        contact = Contact.objects.create(name='Enrique Flores Magon')
+        email = Email.objects.create(email='original@regeneracion.org')
+        contact.emails.add(email)
+        address = Address.objects.create(city='Original City')
+        contact.addresses.add(address)
+        phone = Phone.objects.create(number='1111111111')
+        contact.phones.add(phone)
+
+        data = {
+            "emails": [
+                {
+                    "email": "changed@regeneracion.org",
+                    "id": email.id
+                }
+            ],
+            "addresses": [
+                {
+                    "city": "New City",
+                    "id": address.id
+                }
+            ],
+            "phones": [
+                {
+                    "number": "2222222222",
+                    "id": phone.id
+                }
+            ],
+            "name": "Enrique Flores Magon",
+            "member": True
+        }
+
+        response = self.client.put(
+            reverse('contact-detail', kwargs={'pk': contact.id}),
+            data=data,
+            format='json'
+        )
+        updated_contact = Contact.objects.get(name='Enrique Flores Magon')
+
+        self.assertTrue(
+            'changed@regeneracion.org' in
+            [email.email for email
+             in updated_contact.emails.all()],
+        )
+        self.assertFalse(
+            'original@regeneracion.org' in
+            [email.email for email
+             in updated_contact.emails.all()],
+        )
+        self.assertTrue(
+            '2222222222' in
+            [phone.number for phone
+             in updated_contact.phones.all()],
+        )
+        self.assertFalse(
+            '1111111111' in
+            [phone.number for phone
+             in updated_contact.phones.all()],
+        )
+        self.assertTrue(
+            'New City' in
+            [address.city for address
+             in updated_contact.addresses.all()],
+        )
+        self.assertFalse(
+            'Original City' in
+            [address.city for address
+             in updated_contact.addresses.all()],
+        )
