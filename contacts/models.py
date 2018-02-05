@@ -44,9 +44,9 @@ class Contact(models.Model):
     """
     name = models.CharField(blank=True, max_length=255)
 
-    addresses = models.ManyToManyField(Address, blank=True)
-    phones = models.ManyToManyField(Phone, blank=True)
-    emails = models.ManyToManyField(Email, blank=True)
+    addresses = models.ManyToManyField(Address, blank=True, null=True)
+    phones = models.ManyToManyField(Phone, blank=True, null=True)
+    emails = models.ManyToManyField(Email, blank=True, null=True)
     created_by = models.ForeignKey(
         TequioUser,
         related_name="contact_created_by",
