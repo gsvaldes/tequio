@@ -184,3 +184,33 @@ class TestAddressViewSet(APITestCase):
         )
         self.assertEqual(updated_contact.phones.first().number, '5551212')
         self.assertEqual(updated_contact.addresses.first().zip_code, '12345')
+
+    def test_empty_list_as_value_deletes_related_fields(self):
+        """
+        Passing an empty list as the value for phones, addresses, or emails
+        should delete any existing related entries.
+        """
+        contact = Contact.objects.create(name='Palomares')
+        email = Email.objects.create(email='original@example.org')
+        contact.emails.add(email)
+        address = Address.objects.create(zip_code='12345')
+        contact.addresses.add(address)
+        phone = Phone.objects.create(number='5551212')
+        contact.phones.add(phone)
+
+        data = {
+            "member": True,
+            "addresses": [],
+            "emails": [],
+            "phones": []
+        }
+
+        response = self.client.put(
+            reverse('contact-detail', kwargs={'pk': contact.id}),
+            data=data,
+            format='json'
+        )
+        updated_contact = Contact.objects.get(name='Palomares')
+        self.assertEqual(updated_contact.emails.count(), 0)
+        self.assertEqual(updated_contact.phones.count(), 0)
+        self.assertEqual(updated_contact.addresses.count(), 0)
