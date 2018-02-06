@@ -149,3 +149,38 @@ class TestAddressViewSet(APITestCase):
             [address.city for address
              in updated_contact.addresses.all()],
         )
+
+    def test_omitted_field_in_update_is_not_altered(self):
+        """
+        Omitting the many to many fields in an update to
+        the ContactSerializer, phones, addresses, or emails
+        should not alter the existing data or create new related
+        entries.
+        """
+        contact = Contact.objects.create(name='Genovevo de la O')
+        email = Email.objects.create(email='original@example.org')
+        contact.emails.add(email)
+        address = Address.objects.create(zip_code='12345')
+        contact.addresses.add(address)
+        phone = Phone.objects.create(number='5551212')
+        contact.phones.add(phone)
+
+        data = {
+            "member": True
+        }
+
+        response = self.client.put(
+            reverse('contact-detail', kwargs={'pk': contact.id}),
+            data=data,
+            format='json'
+        )
+        updated_contact = Contact.objects.get(name='Genovevo de la O')
+        self.assertEqual(updated_contact.emails.count(), 1)
+        self.assertEqual(updated_contact.phones.count(), 1)
+        self.assertEqual(updated_contact.addresses.count(), 1)
+        self.assertEqual(
+            updated_contact.emails.first().email,
+            'original@example.org'
+        )
+        self.assertEqual(updated_contact.phones.first().number, '5551212')
+        self.assertEqual(updated_contact.addresses.first().zip_code, '12345')
