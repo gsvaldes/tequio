@@ -1,9 +1,10 @@
 """
 Serializers for Contact and related models
 """
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
-from contacts.models import Contact, Address, Phone, Email
+from contacts.models import Contact, Address, Phone, Email, Tag
 from users.models import TequioUser
 
 
@@ -48,22 +49,32 @@ class EmailSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {"id": {"required": False, "read_only": False}}
 
 
+class TagSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    """
+    class Meta:
+        model = Tag
+        fields = ('name', 'url', 'id')
+        extra_kwargs = {"id": {"required": False, "read_only": False}}
+
+
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
     """
     The Contact Serializer also updates the related
     addresses, phones, and emails and updates the last_updated_by
     field with the current logged user
     """
-    # TODO if no emails list, addresses list, or phones list passed
-    # keep existing data
-    # must pass empty list to delete
-    # example 'addresses': [] would delete all addresses
-    # but ommitting addresses would not
     created_by = UserSerializer(read_only=True)
     last_updated_by = UserSerializer(read_only=True)
     emails = EmailSerializer(many=True, required=False)
     addresses = AddressSerializer(many=True, required=False)
     phones = PhoneSerializer(many=True, required=False)
+    # tags = TagSerializer(many=True, required=False)
+    tags = serializers.SlugRelatedField(
+        many=True,
+        queryset=Tag.objects.all(),
+        slug_field='name'
+    )
 
     class Meta:
         model = Contact
@@ -74,6 +85,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
         addresses_data = validated_data.pop('addresses', None)
         emails_data = validated_data.pop('emails', None)
         phones_data = validated_data.pop('phones', None)
+        tags_data = validated_data.pop('tags', None)
         user = self.context['request'].user
         contact = Contact.objects.create(
             created_by=user,
@@ -92,6 +104,9 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
             for phone_data in phones_data:
                 phone = Phone.objects.create(**phone_data)
                 contact.phones.add(phone)
+        if tags_data:
+            for tag in tags_data:
+                contact.tags.add(tag)
 
         return contact
 
@@ -116,6 +131,9 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                 phone.id: phone for phone in instance.phones.all()}
             data_phones_mapping = {phone_data.get(
                 'id'): phone_data for phone_data in phones_data}
+
+        tags_data = validated_data.pop('tags', None)
+        instance_tags = instance.tags.all()
 
         instance.name = validated_data.get('name', instance.name)
         instance.member = validated_data.get('member', instance.member)
@@ -171,5 +189,8 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
             for phone_id, phone in instance_phones_mapping.items():
                 if phone_id not in data_phones_mapping:
                     phone.delete()
+
+        if tags_data is not None:
+            instance.tags.set(tags_data)
 
         return instance

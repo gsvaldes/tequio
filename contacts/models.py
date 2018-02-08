@@ -38,6 +38,20 @@ class Email(models.Model):
         return self.email
 
 
+class Tag(models.Model):
+    """
+    Tag for contacts.  
+    see 
+    http://tinystruggles.com/2015/06/04/django-api-resource-with-tags.html
+    """
+    name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return 'Tag[id: {id}, name: {name}]'.format(
+            id=self.id, name=self.name
+        )
+
+
 class Contact(models.Model):
     """
     Contact
@@ -47,6 +61,7 @@ class Contact(models.Model):
     addresses = models.ManyToManyField(Address, blank=True)
     phones = models.ManyToManyField(Phone, blank=True)
     emails = models.ManyToManyField(Email, blank=True)
+    tags = models.ManyToManyField(Tag, related_name='contacts')
     created_by = models.ForeignKey(
         TequioUser,
         related_name="contact_created_by",

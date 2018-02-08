@@ -3,9 +3,9 @@ API views for Contact and related models
 """
 from rest_framework import viewsets
 
-from contacts.models import Contact, Address, Phone, Email
+from contacts.models import Contact, Address, Phone, Email, Tag
 from contacts.serializers import ContactSerializer, UserSerializer, \
-    AddressSerializer, PhoneSerializer, EmailSerializer
+    AddressSerializer, PhoneSerializer, EmailSerializer, TagSerializer
 from users.models import TequioUser
 
 
@@ -47,3 +47,11 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = TequioUser.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows tags to be viewed or edited.
+    """
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
