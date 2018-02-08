@@ -51,11 +51,17 @@ class EmailSerializer(serializers.HyperlinkedModelSerializer):
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     """
+    TagSerializer displays all related contacts
     """
+    contacts = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='name'
+    )
+
     class Meta:
         model = Tag
-        fields = ('name', 'url', 'id')
-        extra_kwargs = {"id": {"required": False, "read_only": False}}
+        fields = ('name', 'url', 'id', 'contacts')
 
 
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
@@ -69,7 +75,6 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
     emails = EmailSerializer(many=True, required=False)
     addresses = AddressSerializer(many=True, required=False)
     phones = PhoneSerializer(many=True, required=False)
-    # tags = TagSerializer(many=True, required=False)
     tags = serializers.SlugRelatedField(
         many=True,
         queryset=Tag.objects.all(),
@@ -79,7 +84,6 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Contact
         fields = '__all__'
-        # depth = 1
 
     def create(self, validated_data):
         addresses_data = validated_data.pop('addresses', None)
@@ -133,7 +137,6 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                 'id'): phone_data for phone_data in phones_data}
 
         tags_data = validated_data.pop('tags', None)
-        instance_tags = instance.tags.all()
 
         instance.name = validated_data.get('name', instance.name)
         instance.member = validated_data.get('member', instance.member)
