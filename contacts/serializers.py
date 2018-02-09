@@ -78,7 +78,8 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
     tags = serializers.SlugRelatedField(
         many=True,
         queryset=Tag.objects.all(),
-        slug_field='name'
+        slug_field='name',
+        required=False
     )
 
     class Meta:
