@@ -103,3 +103,10 @@ ENV/
 .DS_Store
 .vscode
 
+# vue and npm
+node_modules/
+npm-debug.log
+
+
+
+

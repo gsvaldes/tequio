@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% load render_bundle from webpack_loader %} {% block content %}
 <div>{{ message }}</div>
-
-
-{% endblock %}
+<div id="app"></div>
+{% render_bundle 'main' %} {% endblock %}

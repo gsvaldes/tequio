@@ -18,7 +18,10 @@ from django.core.exceptions import ImproperlyConfigured
 env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# TODO BASE_DIR config not correct with cookie cutter setup
+# Using ROOT_DIR instead,
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = environ.Path(__file__) - 3
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,8 +35,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-
-
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +46,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'webpack_loader',
 ]
 
 LOCAL_APPS = [
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'tequio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates',],
+        'DIRS': ['./templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,11 +126,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 
 # Extra places for collectstatic to find static files.
+# TODO compare to cookiecutter config
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    str(ROOT_DIR('static')),
+    str(ROOT_DIR('src')),
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -140,11 +144,24 @@ LOGIN_REDIRECT_URL = '/'
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+                    default='django.core.mail.backends.smtp.EmailBackend')
 
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     )
+}
+
+# Django-webpack
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        # 'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
+        # 'POLL_INTERVAL': 0.1,
+        # 'TIMEOUT': None,
+        # 'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
 }
