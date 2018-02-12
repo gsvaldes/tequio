@@ -49,6 +49,98 @@ unknowable password is created and the new user is sent a password
 reset email. 
 
 
+Front End
++++++++++
+
+This project uses Vue.js as the principal frontend library.
+https://vuejs.org/
+
+Webpack, https://webpack.js.org/,  is used is to bundle and compile
+the JavaScript files into a single js file per page that will run 
+in the browser.
+
+Structure
+---------
+
+ - ``package.json`` has two scripts, ``dev`` and ``build``.  ``npm run build`` 
+   will create a compiled file in the ``src/bundles`` directory with the name
+   main-[hash].js.  ``npm run dev`` will create a similar file, but in memory
+   only to be used during development.
+
+- ``webpack.config.js``
+   - ``entry`` the entry point is for the js files to be compiled
+   - ``output`` where webpack should save the compiled file and what to name it
+   - ``BundleTracker`` a plugin that updates ``webpack-stats.json`` with
+       the lastest bundle name
+
+ - ``.babelrc`` The config for https://babeljs.io/
+
+ -  ``src`` The directory for the JavaScript code.  Within this ``main.js``
+     is the entry point into the vue files for a given app
+
+Connecting to Django
+--------------------
+
+Django Webpack Loader https://github.com/ezhome/django-webpack-loader
+is added to installed apps.
+
+..code:: python
+
+   STATICFILES_DIRS = (
+       str(ROOT_DIR('src')),
+   )
+
+   WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
+        }
+    }
+
+In ``STATICFILES_DIRS``, we add the location of the built bundles to where
+Django will look for static files. Also add the WEBPACK_LOADER setting.
+
+To add a given bundle to a Django template use
+
+..code:: python
+
+   {% load render_bundle from webpack_loader %}
+   ...
+   <div id="app"></div>``
+   ...
+   {% render_bundle 'main' %}
+
+Where ``<div id="app"></div>`` is the element of the template that Vue will control   
+and ``{% render_bundle 'main' %}`` adds the compiled script.
+
+To pass any initial data from Django to Vue the following pattern is used
+
+..code:: html
+
+   <script>
+      var initial_data = {};
+      initial_data.contact_list_url = '{% url "contact-list" %}';
+      window.initial_data = initial_data;
+   </script>
+
+Add any initial data to a initial_data object and then add that object
+to the window element.  Then within the ``main.js`` entry file. Add 
+
+..code:: JavaScript
+
+   Vue.prototype.vue_data = window.initial_data;
+
+initial_data will now be accessible within the vue instance as ``this.initial_data``
+
+
+
+
+   
+
+
+
+
+
 
 Testing
 +++++++
