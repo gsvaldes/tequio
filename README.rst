@@ -71,7 +71,7 @@ Structure
    - ``entry`` the entry point is for the js files to be compiled
    - ``output`` where webpack should save the compiled file and what to name it
    - ``BundleTracker`` a plugin that updates ``webpack-stats.json`` with
-       the lastest bundle name
+   the lastest bundle name
 
  - ``.babelrc`` The config for https://babeljs.io/
 
