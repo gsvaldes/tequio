@@ -86,18 +86,16 @@ is added to installed apps.
 
 .. code:: python
 
-STATICFILES_DIRS = (
-    str(ROOT_DIR('src')),
-)
+   STATICFILES_DIRS = (
+       str(ROOT_DIR('src')),
+   )
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
-        'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
-    }
-}
-
-
+   WEBPACK_LOADER = {
+       'DEFAULT': {
+           'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+           'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
+       }
+   }
 
 In ``STATICFILES_DIRS``, we add the location of the built bundles to where
 Django will look for static files. Also add the WEBPACK_LOADER setting.
