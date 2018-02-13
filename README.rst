@@ -67,7 +67,7 @@ Structure
    main-[hash].js.  ``npm run dev`` will create a similar file, but in memory
    only to be used during development.
 
-- ``webpack.config.js``
+ - ``webpack.config.js``
    - ``entry`` the entry point is for the js files to be compiled
    - ``output`` where webpack should save the compiled file and what to name it
    - ``BundleTracker`` a plugin that updates ``webpack-stats.json`` with
@@ -84,25 +84,27 @@ Connecting to Django
 Django Webpack Loader https://github.com/ezhome/django-webpack-loader
 is added to installed apps.
 
-..code:: python
+.. code:: python
 
-   STATICFILES_DIRS = (
-       str(ROOT_DIR('src')),
-   )
+STATICFILES_DIRS = (
+    str(ROOT_DIR('src')),
+)
 
-   WEBPACK_LOADER = {
+WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
         'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
-        }
     }
+}
+
+
 
 In ``STATICFILES_DIRS``, we add the location of the built bundles to where
 Django will look for static files. Also add the WEBPACK_LOADER setting.
 
 To add a given bundle to a Django template use
 
-..code:: python
+.. code:: python
 
    {% load render_bundle from webpack_loader %}
    ...
@@ -115,7 +117,7 @@ and ``{% render_bundle 'main' %}`` adds the compiled script.
 
 To pass any initial data from Django to Vue the following pattern is used
 
-..code:: html
+.. code:: html
 
    <script>
       var initial_data = {};
@@ -126,11 +128,12 @@ To pass any initial data from Django to Vue the following pattern is used
 Add any initial data to a initial_data object and then add that object
 to the window element.  Then within the ``main.js`` entry file. Add 
 
-..code:: JavaScript
+.. code:: javascript
 
    Vue.prototype.vue_data = window.initial_data;
 
-initial_data will now be accessible within the vue instance as ``this.initial_data``
+initial_data will now be accessible within the vue instance
+as ``this.initial_data``
 
 
 
