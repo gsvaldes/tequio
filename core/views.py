@@ -7,14 +7,12 @@ from django.views import View
 from contacts.models import Contact
 from contacts.serializers import ContactSerializer
 
-# Create your views here.
-
 
 class HomeView(LoginRequiredMixin, View):
     """
-    holding view 
+    holding view
     """
 
     def get(self, request, *args, **kwargs):
-        context = {"message": "hello tequio"}
+        context = {}  # TODO pass initial data
         return render(request, 'core/home.html', context=context)

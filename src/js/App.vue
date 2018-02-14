@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-
-    <ul>
-      <li v-for="contact in contacts">
-        {{contact.name}}
-      </li>
-    </ul>
-
+    <h1>Contact List</h1>
+    <v-client-table :columns="columns" :data="contacts" :options="options">
+      <div slot="phones" slot-scope="props">
+        <div v-for="(phone, index) in props.row.phones" :key="index">
+          {{phone.number | phone}}<span class="oi oi-eye"></span>
+        </div>
+      </div>
+      <div slot="tags" slot-scope="props">
+        <span v-for="(tag, index) in props.row.tags" :key="index" class="badge badge-secondary">
+          {{tag}}
+        </span>
+      </div>
+    </v-client-table>
   </div>
 </template>
 
@@ -19,7 +25,17 @@ export default {
     return {
       msg: "Initial vue setup",
       contacts: [],
-      errors: []
+      errors: [],
+      columns: ["name", "phones", "tags"],
+      options: {
+        headings: {
+          name: "Name",
+          phones: "Phone Number(s)",
+          tags: "Tags"
+        },
+        sortable: ["name"],
+        filterable: ["name", "tags"]
+      }
     };
   },
   created() {
@@ -33,6 +49,13 @@ export default {
         console.log("errors", e);
         this.errors.push(e);
       });
+  },
+  filters: {
+    phone: function(value) {
+      return value
+        .replace(/\D+/g, "")
+        .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+    }
   }
 };
 </script>

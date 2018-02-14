@@ -7,11 +7,13 @@ def runlocal():
     """
     local('./manage.py runserver --settings=tequio.settings.local')
 
+
 def shelllocal():
     """
     django shell with local settings
     """
     local('./manage.py shell --settings=tequio.settings.local')
+
 
 def test():
     """

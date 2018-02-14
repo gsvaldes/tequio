@@ -133,6 +133,25 @@ to the window element.  Then within the ``main.js`` entry file. Add
 initial_data will now be accessible within the vue instance
 as ``this.initial_data``
 
+Development Server
+------------------
+
+The ``server.js`` file is a local development only 
+file that runs webpack-dev-server and serves the static
+content on the 3000 port.
+
+For local development, in one terminal run
+``node server.js``
+
+and in another 
+``./manage.py runserver --settings.tequio.local``
+or ``fab runlocal``
+
+The current setup will still require a page refresh to 
+see any static file changes.
+
+TODO add hot reloading
+
 
 
 
@@ -159,6 +178,13 @@ Heroku Specific
 Third Party Tools Used
 ++++++++++++++++++++++
 
+
+Django Rest Framework
+---------------------
+
+http://www.django-rest-framework.org/
+Purpose: Provide internal use only APIs
+
 Whitenoise
 ----------
 
@@ -166,11 +192,23 @@ http://whitenoise.evans.io/
 Purpose: Serve static files 
 Used in place on NGINX
 
+DJ-Database-URL
+---------------
+
+https://github.com/kennethreitz/dj-database-url
+Purpose: Use Database URLs in the Django Application
+
 django-environ
 --------------
 
 https://django-environ.readthedocs.io
 Purpose: Make it easier to pull settings from ENV variables
+
+Fabric 3
+--------
+
+Python 3 compatible fork of the original Fabric
+http://docs.fabfile.org/
 
 
 
