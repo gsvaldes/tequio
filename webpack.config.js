@@ -3,7 +3,10 @@ var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
-  entry: './src/js/main.js',
+  entry: {
+    'list-main': './src/js/contacts/list/list-main.js',
+    'detail-main': './src/js/contacts/detail/detail-main.js'
+  },
   output: {
     path: path.resolve('./src/bundles/'),
     filename: "[name]-[hash].js",

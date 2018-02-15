@@ -16,3 +16,13 @@ class HomeView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {}  # TODO pass initial data
         return render(request, 'core/home.html', context=context)
+
+
+class DetailView(LoginRequiredMixin, View):
+    """
+    see and and contact details
+    """
+
+    def get(self, request, *args, **kwargs):
+        context = {}  # TODO pass initial data
+        return render(request, 'core/detail.html', context=context)
