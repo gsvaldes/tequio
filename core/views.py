@@ -24,5 +24,10 @@ class DetailView(LoginRequiredMixin, View):
     """
 
     def get(self, request, *args, **kwargs):
-        context = {}  # TODO pass initial data
+        pk = kwargs.get('pk')
+        instance = Contact.objects.get(pk=pk)
+        serializer = ContactSerializer(
+            instance=instance, context={'request': request})
+        data = json.dumps(serializer.data)
+        context = {'data': data}
         return render(request, 'core/detail.html', context=context)

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <h1>Contact List</h1>
     <v-client-table :columns="columns" :data="contacts" :options="options">
       <div slot="phones" slot-scope="props">
@@ -20,7 +20,6 @@
 import axios from "axios";
 
 export default {
-  name: "app",
   data() {
     return {
       msg: "Initial vue setup",
@@ -40,7 +39,7 @@ export default {
   },
   created() {
     axios
-      .get(this.vue_data.contact_list_url)
+      .get(this.initial_data.contact_list_url)
       .then(response => {
         console.log("response", response);
         this.contacts = response.data;

@@ -1,9 +1,7 @@
-{% extends 'base.html' %} {% load render_bundle from webpack_loader %} {% block content %}
+{% extends 'base.html' %} {% load core_tags %} {% load render_bundle from webpack_loader %} {% block content %}
 
-<div>{{data}}</div>
 <div id="app"></div>
 <script>
-    // var vue_data = {};
-    // vue_data.contact_list_url = '{% url "contact-list" %}';
-    // window.vue_data = vue_data;
+    var initial_data = JSON.parse({{ data| json }});
+    window.initial_data = initial_data;
 </script> {% render_bundle 'detail-main' %} {% endblock %}

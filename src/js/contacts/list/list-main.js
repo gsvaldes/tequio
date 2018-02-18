@@ -6,7 +6,7 @@ import { ClientTable, Event } from 'vue-tables-2';
 // Vue.use(ClientTable);
 Vue.use(ClientTable, { theme: 'bootstrap4' });
 
-Vue.prototype.vue_data = window.vue_data;
+Vue.prototype.initial_data = window.initial_data;
 
 new Vue({
   el: '#app',

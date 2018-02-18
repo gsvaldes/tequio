@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 
-// Vue.prototype.vue_data = window.vue_data;
+Vue.prototype.initial_data = window.initial_data;
 
 new Vue({
     el: '#app',

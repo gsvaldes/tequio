@@ -4,5 +4,5 @@ from core.views import HomeView, DetailView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^detail$', DetailView.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', DetailView.as_view(), name='detail'),
 ]

@@ -211,6 +211,15 @@ Python 3 compatible fork of the original Fabric
 http://docs.fabfile.org/
 
 
+Bleach
+------
+
+# TODO may be redundant since we are using DRF serializer
+Bleach is an allowed-list-based HTML sanitizing library
+that escapes or strips markup and attributes
+https://github.com/mozilla/bleach
+
+
 
 
 
