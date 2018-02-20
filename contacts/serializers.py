@@ -84,7 +84,9 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Contact
-        fields = '__all__'
+        fields = ('name', 'url', 'id', 'created_by', 'last_updated_by',
+                  'emails', 'addresses', 'phones', 'tags', 'member'
+                  )
 
     def create(self, validated_data):
         addresses_data = validated_data.pop('addresses', None)

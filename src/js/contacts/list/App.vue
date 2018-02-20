@@ -2,6 +2,9 @@
   <div>
     <h1>Contact List</h1>
     <v-client-table :columns="columns" :data="contacts" :options="options">
+      <div slot="name" slot-scope="props">
+        <a :href="'/' + props.row.id">{{props.row.name}}</a>
+      </div>
       <div slot="phones" slot-scope="props">
         <div v-for="(phone, index) in props.row.phones" :key="index">
           {{phone.number | phone}}<span class="oi oi-eye"></span>

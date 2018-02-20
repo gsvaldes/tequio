@@ -6,23 +6,23 @@
             <div class="card-header">{{contactData.name}}</div>
             <div class="card-body">
                 <h5 class="card-title">Addresses</h5>
-                <address v-for="(address, i) in contactData.addresses" :key=i>
+                <address v-for="address in contactData.addresses" :key=address.id>
                     <div>{{address.address}} {{address.street}}</div>
                     <div>{{address.city}} {{address.state}} {{address.zip_code}} {{address.country}}</div>      
                 </address>
                 <hr>
                 <h5 class="card-title">Emails</h5>
-                <div v-for="(email, i) in contactData.emails" :key=i>
+                <div v-for="email in contactData.emails" :key=email.id>
                     {{email.email}}
                 </div>
                 <hr>
                 <h5 class="card-title">Phones</h5>
-                <div v-for="(phone, i) in contactData.phones" :key=i>
+                <div v-for="phone in contactData.phones" :key=phone.id>
                     {{phone.number|phone}}
                 </div>
                 <hr>
                 <h5 class="card-title">Tags</h5>
-                <div v-for="(tag, i) in contactData.tags" :key=i>
+                <div v-for="tag in contactData.tags" :key=tag.id>
                     {{tag}}
                 </div>
             </div>

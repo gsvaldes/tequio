@@ -1,6 +1,11 @@
 <template>
     <div>
-        Let's edit
+        <form action="">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" type="text" v-model="contactData.name" class="form-control">
+            </div>
+        </form>
         {{contactData.name}}
         <button class="btn btn-danger" @click="submit">Submit</button>
     </div>
