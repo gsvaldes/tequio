@@ -1,3 +1,5 @@
-from django.contrib import admin
+from django.contrib.gis import admin
+from districts.models import AlderDistrict
 
-# Register your models here.
+
+admin.site.register(AlderDistrict, admin.GeoModelAdmin)

@@ -108,5 +108,10 @@ node_modules/
 npm-debug.log
 
 
+# gis data for load scripts
+districts/data/*
+
+
+
 
 

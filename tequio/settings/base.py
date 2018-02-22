@@ -42,6 +42,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 ]
 
 THIRD_PARTY_APPS = [
@@ -53,6 +54,7 @@ LOCAL_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'contacts.apps.ContactsConfig',
+    'districts.apps.DistrictsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
