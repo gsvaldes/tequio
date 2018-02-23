@@ -18,10 +18,12 @@ from django.contrib import admin
 
 from core import urls as core_urls
 from contacts import urls as contact_urls
+from districts import urls as districts_urls
 
 urlpatterns = [
     url(r'^', include(core_urls)),
     url(r'^contacts/', include(contact_urls)),
+    url(r'^districts/', include(districts_urls)),
     url(r'^admin/', admin.site.urls),
 ]
 
