@@ -56,7 +56,7 @@ class Contact(models.Model):
     """
     Contact
     """
-    name = models.CharField(blank=True, max_length=255)
+    name = models.CharField(max_length=255)
     # TODO null has no effect on many to many field
     addresses = models.ManyToManyField(Address, blank=True)
     phones = models.ManyToManyField(Phone, blank=True)
