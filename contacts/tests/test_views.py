@@ -117,6 +117,7 @@ class TestAddressViewSet(APITestCase):
             data=data,
             format='json'
         )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_contact = Contact.objects.get(name='Enrique Flores Magon')
 
         self.assertTrue(
@@ -166,6 +167,7 @@ class TestAddressViewSet(APITestCase):
         contact.phones.add(phone)
 
         data = {
+            "name": 'Genovevo de la O',
             "member": True
         }
 
@@ -174,6 +176,7 @@ class TestAddressViewSet(APITestCase):
             data=data,
             format='json'
         )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_contact = Contact.objects.get(name='Genovevo de la O')
         self.assertEqual(updated_contact.emails.count(), 1)
         self.assertEqual(updated_contact.phones.count(), 1)
@@ -200,6 +203,7 @@ class TestAddressViewSet(APITestCase):
 
         data = {
             "member": True,
+            "name": "Palomares",
             "addresses": [],
             "emails": [],
             "phones": []
@@ -210,6 +214,7 @@ class TestAddressViewSet(APITestCase):
             data=data,
             format='json'
         )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_contact = Contact.objects.get(name='Palomares')
         self.assertEqual(updated_contact.emails.count(), 0)
         self.assertEqual(updated_contact.phones.count(), 0)
