@@ -34,3 +34,7 @@ DATABASES = {
 ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']  # TODO move to env variable
 
 INSTALLED_APPS += ['gunicorn', ]
+
+# see https://devcenter.heroku.com/articles/postgis#geodjango-setup
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
