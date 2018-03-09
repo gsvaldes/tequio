@@ -168,6 +168,8 @@ Testing
 Deployment
 ++++++++++
 
+GDAL config
+
 Heroku Specific
 ---------------
 
