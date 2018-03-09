@@ -30,6 +30,7 @@ DATABASES = {
         default=env('DATABASE_URL')
     )
 }
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 ALLOWED_HOSTS = ['demo-tequio.herokuapp.com']  # TODO move to env variable
 
