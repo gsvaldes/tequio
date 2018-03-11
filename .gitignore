@@ -111,6 +111,10 @@ npm-debug.log
 # gis data for load scripts
 districts/data/*
 
+# webpack
+webpack-stats.json
+src/bundles/
+
 
 
 

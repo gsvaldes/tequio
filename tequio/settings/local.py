@@ -30,3 +30,11 @@ DATABASES = {
         'PORT': '',  # Set to empty string for default.
     }
 }
+
+# Django-webpack
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
+    }
+}

@@ -156,15 +156,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
-
-# Django-webpack
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        # 'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
-        'STATS_FILE': str(ROOT_DIR('webpack-stats.json')),
-        # 'POLL_INTERVAL': 0.1,
-        # 'TIMEOUT': None,
-        # 'IGNORE': ['.+\.hot-update.js', '.+\.map']
-    }
-}

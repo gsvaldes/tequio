@@ -39,3 +39,11 @@ INSTALLED_APPS += ['gunicorn', ]
 # see https://devcenter.heroku.com/articles/postgis#geodjango-setup
 GDAL_LIBRARY_PATH = "/app/.heroku/vendor/lib/libgdal.so"
 GEOS_LIBRARY_PATH = "/app/.heroku/vendor/lib/libgeos_c.so"
+
+# Django-webpack
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': str(ROOT_DIR('webpack-stats-prod.json')),
+    }
+}

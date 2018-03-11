@@ -5,7 +5,7 @@
         <div class="card bg-light mb-3" style="max-width: 18rem;">
             <div class="card-header">{{contactData.name}}</div>
             <div class="card-body">
-                <h5 class="card-title">Addresses</h5>
+                <h5 class="card-title">Address</h5>
                 <address v-for="address in contactData.addresses" :key=address.id>
                     <div>{{address.address}} {{address.street}}</div>
                     <div>{{address.city}} {{address.state}} {{address.zip_code}} {{address.country}}</div>      
