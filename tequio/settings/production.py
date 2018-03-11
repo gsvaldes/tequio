@@ -43,7 +43,7 @@ GEOS_LIBRARY_PATH = "/app/.heroku/vendor/lib/libgeos_c.so"
 # Django-webpack
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'BUNDLE_DIR_NAME': 'bundles-prod/',  # must end with slash
         'STATS_FILE': str(ROOT_DIR('webpack-stats-prod.json')),
     }
 }
