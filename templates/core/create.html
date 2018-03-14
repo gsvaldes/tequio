@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% load core_tags %} {% load render_bundle from webpack_loader %} {% block content %}
+
+<div id="app"></div>
+<script>
+    var initial_data = JSON.parse({{ data| json }});
+    // var initial_data = 'dummy'
+    window.initial_data = initial_data;
+</script> {% render_bundle 'create-main' %} {% endblock %}

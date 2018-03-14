@@ -31,3 +31,17 @@ class DetailView(LoginRequiredMixin, View):
         data = json.dumps(serializer.data)
         context = {'data': data}
         return render(request, 'core/detail.html', context=context)
+
+
+class CreateView(LoginRequiredMixin, View):
+    """
+    create a new contact
+    """
+
+    def get(self, request, *args, **kwargs):
+        context = {'data': {'foo': 'bar'}}
+        return render(request, 'core/create.html', context=context)
+
+
+class UpdateView(LoginRequiredMixin, View):
+    pass
