@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Contact List</h1>
+    <button><a href="/create">Add New Contact</a></button>
     <v-client-table :columns="columns" :data="contacts" :options="options">
       <div slot="name" slot-scope="props">
         <a :href="'/' + props.row.id">{{props.row.name}}</a>
@@ -67,5 +68,8 @@ h1,
 h2 {
   font-weight: normal;
   color: purple;
+}
+.VuePagination {
+  text-align: center;
 }
 </style>
