@@ -2,8 +2,8 @@
     <div>
         
         
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">{{contactData.name}}</div>
+        <div class="card bg-transparent contact-details" >
+            <div class="card-header bg-transparent">{{contactData.name}}</div>
             <div class="card-body">
                 <h5 class="card-title">Address</h5>
                 <address v-for="address in contactData.addresses" :key=address.id>
@@ -22,15 +22,19 @@
                 </div>
                 <hr>
                 <h5 class="card-title">Tags</h5>
-                <div v-for="tag in contactData.tags" :key=tag.id>
+                <span class="badge badge-info tag" v-for="tag in contactData.tags" :key=tag.id>
                     {{tag}}
-                </div>
+                </span>
             </div>
             <div class="card-footer bg-transparent">
                 <button class="btn btn-primary" @click="updateContact">Edit Contact</button>
             </div>
         </div>
+        
     </div>
+
+
+    
   
 </template>
 <script>
@@ -50,7 +54,16 @@ export default {
   }
 };
 </script>
-<style>
-
+<style scoped>
+.contact-details {
+  /* width: 400px; */
+  margin: 30px auto;
+  border: 1px solid #eee;
+  padding: 20px;
+  box-shadow: 0 2px 3px #ccc;
+}
+.tag {
+  margin-right: 0.2em;
+}
 </style>
 

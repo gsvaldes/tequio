@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 offset-md-3">
       <!-- <button class="btn btn-primary" @click="edit=true" v-show="!edit">Edit Contact</button> -->
       <app-detail 
         :contactData="contactData" 
@@ -11,6 +12,7 @@
         v-else
         @formUpdated="edit = !$event"
       ></app-update>
+    </div>  
   </div>
 </template>
 <script>

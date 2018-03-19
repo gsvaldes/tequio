@@ -1,8 +1,12 @@
 <template>
   <div>
     <h1>Contact List</h1>
-    <button><a href="/create">Add New Contact</a></button>
-    <v-client-table :columns="columns" :data="contacts" :options="options">
+    <v-client-table :columns="columns" :data="contacts" :options="options" id="client-table">
+      <div slot="afterFilter" >
+        <button class="btn btn-outline-primary" id="create-button">
+          <a href="/create">Add New Contact</a>
+        </button> 
+      </div>
       <div slot="name" slot-scope="props">
         <a :href="'/' + props.row.id">{{props.row.name}}</a>
       </div>
@@ -69,7 +73,14 @@ h2 {
   font-weight: normal;
   color: purple;
 }
-.VuePagination {
-  text-align: center;
+#client-table {
+  width: 95%;
+  margin: 0 auto;
+}
+.VueTables__search-field {
+  padding-right: 20px;
+}
+#create-button {
+  margin-top: 1.5rem;
 }
 </style>
