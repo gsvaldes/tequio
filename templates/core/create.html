@@ -2,7 +2,7 @@
 
 <div id="app"></div>
 <script>
-    var initial_data = JSON.parse({{ data| json }});
-    // var initial_data = 'dummy'
+    var initial_data = {};
+    initial_data.contact_list_url = '{% url "contact-list" %}';
     window.initial_data = initial_data;
 </script> {% render_bundle 'create-main' %} {% endblock %}

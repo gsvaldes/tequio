@@ -152,6 +152,12 @@ see any static file changes.
 
 TODO add hot reloading
 
+Other Front End Packages Used
+-----------------------------
+
+vue-tables-2
+
+
 
 
 

@@ -6,6 +6,7 @@ from users.models import TequioUser
 class Address(models.Model):
     """Address"""
     address = models.CharField(max_length=100, blank=True)
+    # TODO Remove street, use only address
     street = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=100, blank=True)
