@@ -22,7 +22,7 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = Address
-        fields = ('address', 'street', 'city', 'state',
+        fields = ('address', 'city', 'state',
                   'zip_code', 'country', 'url', 'id')
         extra_kwargs = {"id": {"required": False, "read_only": False}}
 
@@ -155,7 +155,6 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                 else:
                     address.address = address_data.get(
                         'address', address.address)
-                    address.street = address_data.get('street', address.street)
                     address.city = address_data.get('city', address.city)
                     address.state = address_data.get('state', address.state)
                     address.zip_code = address_data.get(

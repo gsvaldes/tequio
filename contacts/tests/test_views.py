@@ -14,8 +14,7 @@ NEW_CONTACT_DATA = {
     ],
     "addresses": [
         {
-            "address": "123",
-            "street": "Ahuizote Avenue",
+            "address": "123 Ahuizote Avenue",
             "city": "New Haven",
             "state": "CT",
             "zip_code": "06511",
@@ -39,8 +38,7 @@ NEW_CONTACT_DATA2 = {
     ],
     "addresses": [
         {
-            "address": "456",
-            "street": "Ahuizote Avenue",
+            "address": "456 Ahuizote Avenue",
             "city": "New Haven",
             "state": "CT",
             "zip_code": "06511",
