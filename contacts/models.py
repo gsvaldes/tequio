@@ -23,9 +23,13 @@ class Address(models.Model):
 class Phone(models.Model):
     """Phone"""
     number = models.CharField(max_length=50, blank=True)
+    type = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return self.number
+        return '{number}-{type}'.format(
+            number=self.number,
+            type=self.type
+        )
 
 
 class Email(models.Model):

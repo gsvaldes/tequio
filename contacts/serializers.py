@@ -34,7 +34,7 @@ class PhoneSerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = Phone
-        fields = ('number', 'url', 'id')
+        fields = ('number', 'type', 'url', 'id')
         extra_kwargs = {"id": {"required": False, "read_only": False}}
 
 
@@ -189,6 +189,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
                     instance.phones.add(new_phone)
                 else:
                     phone.number = phone_data.get('number', phone.number)
+                    phone.type = phone_data.get('type', phone.type)
                     phone.save()
 
             for phone_id, phone in instance_phones_mapping.items():

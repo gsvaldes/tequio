@@ -103,6 +103,7 @@ class TestAddressViewSet(APITestCase):
             "phones": [
                 {
                     "number": "2222222222",
+                    "type": 'Cellular',
                     "id": phone.id
                 }
             ],
