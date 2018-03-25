@@ -6,16 +6,14 @@ from users.models import TequioUser
 class Address(models.Model):
     """Address"""
     address = models.CharField(max_length=100, blank=True)
-    # TODO Remove street, use only address
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=100, blank=True)
     zip_code = models.CharField(max_length=25, blank=True)
     country = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return '{address}-{street}-{city}-{state}-{zip}'.format(
+        return '{address}-{city}-{state}-{zip}'.format(
             address=self.address,
-            street=self.street,
             city=self.city,
             state=self.state,
             zip=self.zip_code
