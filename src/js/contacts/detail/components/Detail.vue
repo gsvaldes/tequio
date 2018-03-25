@@ -7,7 +7,7 @@
             <div class="card-body">
                 <h5 class="card-title">Address</h5>
                 <address v-for="address in contactData.addresses" :key=address.id>
-                    <div>{{address.address}} {{address.street}}</div>
+                    <div>{{address.address}}</div>
                     <div>{{address.city}} {{address.state}} {{address.zip_code}} {{address.country}}</div>      
                 </address>
                 <hr>
