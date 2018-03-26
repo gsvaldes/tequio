@@ -2,7 +2,8 @@
 
 <div id="app"></div>
 <script>
-    var initial_data = {};
-    initial_data.contact_list_url = '{% url "contact-list" %}';
-    window.initial_data = initial_data;
+    var initialData = {};
+    initialData.contactListUrl = '{% url "contact-list" %}';
+    initialData.tagListUrl = '{% url "tag-list" %}';
+    window.initialData = initialData;
 </script> {% render_bundle 'create-main' %} {% endblock %}

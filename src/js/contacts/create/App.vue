@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>Add New Contact</h1>
-    <div>{{msg}}</div>
+    <h2>Available Tags</h2>
+    <ul>
+      <li v-for="(tag, index) in tags" :key="index">{{ tag.name }}</li>
+    </ul>
     <form v-on:submit.prevent="addContact">
       <div class="form-group">
         <label for="name">Name</label>
@@ -65,13 +68,16 @@ export default {
       errors: []
     };
   },
+  created() {
+    this.getTags();
+  },
   methods: {
     addContact() {
       this.contact.addresses = [this.address];
       this.contact.emails = [this.email];
       this.contact.phones = [this.phone];
       axios
-        .post(this.initial_data.contact_list_url, this.contact)
+        .post(this.initialData.contactListUrl, this.contact)
         .then(response => {
           console.log("response", response);
           console.log("data", response.data);
@@ -80,6 +86,17 @@ export default {
         .catch(e => {
           console.log("errors", e);
           this.errors.push(e);
+        });
+    },
+    getTags() {
+      axios
+        .get(this.initialData.tagListUrl)
+        .then(response => {
+          console.log("response", response);
+          this.tags = response.data;
+        })
+        .catch(e => {
+          console.log("errors", e);
         });
     }
   }
