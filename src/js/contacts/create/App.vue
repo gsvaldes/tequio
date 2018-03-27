@@ -3,7 +3,7 @@
     <h1>Add New Contact</h1>
     <h2>Available Tags</h2>
     <ul>
-      <li v-for="(tag, index) in tags" :key="index">{{ tag.name }}</li>
+      <li v-for="(tagOption, index) in tagOptions" :key="index">{{ tagOption.name }}</li>
     </ul>
     <form v-on:submit.prevent="addContact">
       <div class="form-group">
@@ -42,6 +42,15 @@
           <input type="text" class="form-control" v-model="phone.type" id="state">
         </div>
       </div>
+      <div class="form-group">
+        <div v-for="(tagOption, index) in tagOptions" :key="index">
+          <input type="checkbox" :id="tagOption.name" :value="tagOption.name" v-model="tags">
+          <label :for="tagOption.name">{{ tagOption.name }}</label>
+        </div>
+        
+        <br>
+        <span>Tags: {{ tags }}</span>
+      </div>
       <button
             class="btn btn-primary"
             @click.prevent="addContact">Add Contact
@@ -64,6 +73,7 @@ export default {
       address: {},
       phone: {},
       email: {},
+      tagOptions: [],
       tags: [],
       errors: []
     };
@@ -76,6 +86,8 @@ export default {
       this.contact.addresses = [this.address];
       this.contact.emails = [this.email];
       this.contact.phones = [this.phone];
+      this.contact.tags = this.tags;
+      console.log("contact: ", this.contact);
       axios
         .post(this.initialData.contactListUrl, this.contact)
         .then(response => {
@@ -93,7 +105,7 @@ export default {
         .get(this.initialData.tagListUrl)
         .then(response => {
           console.log("response", response);
-          this.tags = response.data;
+          this.tagOptions = response.data;
         })
         .catch(e => {
           console.log("errors", e);
