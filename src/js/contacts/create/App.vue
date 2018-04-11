@@ -6,13 +6,19 @@
       <li v-for="(tagOption, index) in tagOptions" :key="index">{{ tagOption.name }}</li>
     </ul>
     <form v-on:submit.prevent="addContact">
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+        </ul>
+      </p>
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" v-model="contact.name" id="name">
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" class="form-control" v-model="address.address" id="address" placeholder="1234 Main St">
+        <input type="text" class="form-control" v-model="address.address" id="address">
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -61,6 +67,7 @@
 
 <script>
 import axios from "axios";
+import _ from "lodash";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -82,12 +89,19 @@ export default {
     this.getTags();
   },
   methods: {
+    validateForm() {
+      this.errors = [];
+      if (!this.contact.name) this.errors.push("Name required.");
+    },
     addContact() {
-      this.contact.addresses = [this.address];
-      this.contact.emails = [this.email];
-      this.contact.phones = [this.phone];
+      this.contact.addresses = _.isEmpty(this.address) ? [] : [this.address];
+      this.contact.emails = _.isEmpty(this.email) ? [] : [this.email];
+      this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
       this.contact.tags = this.tags;
-      console.log("contact: ", this.contact);
+      this.validateForm();
+      if (this.errors.length) {
+        return;
+      }
       axios
         .post(this.initialData.contactListUrl, this.contact)
         .then(response => {
