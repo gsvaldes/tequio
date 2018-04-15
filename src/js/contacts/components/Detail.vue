@@ -24,9 +24,13 @@
                     {{tag}}
                 </span>
             </div>
-            <!-- <div class="card-footer bg-transparent">
-                <button class="btn btn-primary" @click="updateContact">Edit Contact</button>
-            </div> -->
+            <div class="card-footer bg-transparent">
+                <router-link
+                    :to="{name: 'edit', params: {id: id}}"
+                    tag="button"
+                    class="btn btn-primary"
+                >Edit Contact</router-link>
+            </div>
         </div>        
     </div>
 </template>
