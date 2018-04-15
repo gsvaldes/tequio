@@ -14,21 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.core.urlresolvers import reverse_lazy
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 from core import urls as core_urls
 from contacts import urls as contact_urls
 from districts import urls as districts_urls
 
 urlpatterns = [
-    url(r'^', include(core_urls)),
+    # TODO add redirect url to home
+    url(r'^manage/', include(core_urls)),
     url(r'^contacts/', include(contact_urls)),
     url(r'^districts/', include(districts_urls)),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', RedirectView.as_view(url=reverse_lazy('home'))),
 ]
 
 # Add Django site authentication urls (for login, logout, password management)
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
-
 ]
