@@ -103,24 +103,25 @@ export default {
         return;
       }
       axios
-        .post(this.initialData.contactListUrl, this.contact)
+        .post('/contacts/contacts/', this.contact)
         .then(response => {
           console.log("response", response);
           console.log("data", response.data);
           console.log("url", response.data.url);
-          // navegate to detail page, see Navegating from code
+          console.log("id", response.data.id);
+          this.navegateToDetail(response.data.id);
         })
         .catch(e => {
           console.log("errors", e);
           this.errors.push(e);
         });
     },
-    navegateToDetail() {
-      this.$routher.push("/"); // todo detail, not home
+    navegateToDetail(id) {
+      this.$router.push({ name: 'detail', params: { id: id }});
     },
     getTags() {
       axios
-        .get(this.initialData.tagListUrl)
+        .get('/contacts/tags')
         .then(response => {
           console.log("response", response);
           this.tagOptions = response.data;

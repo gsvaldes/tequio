@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <div>Loaded ID: {{ id }}</div>
-        
-        
+    <div>       
         <div class="card bg-transparent contact-details" >
             <div class="card-header bg-transparent">{{contact.name}}</div>
             <div class="card-body">
@@ -30,8 +27,7 @@
             <!-- <div class="card-footer bg-transparent">
                 <button class="btn btn-primary" @click="updateContact">Edit Contact</button>
             </div> -->
-        </div>
-        
+        </div>        
     </div>
 </template>
 <script>

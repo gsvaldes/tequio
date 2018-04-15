@@ -1,6 +1,7 @@
 import List from './components/List.vue'
 import Create from './components/Create.vue'
 import Detail from './components/Detail.vue'
+import Edit from './components/Edit.vue'
 
 export const routes = [
     { 
@@ -17,5 +18,10 @@ export const routes = [
         path: '/detail/:id',
         component: Detail,
         name: 'detail'
+     },
+     {
+         path: '/edit/:id',
+         component: Edit,
+         name: 'edit'
      }
 ];
