@@ -3,8 +3,9 @@
 <div>{{data}}</div>
 <div id="app"></div>
 <script>
-    var initial_data = {};
-    initial_data.contact_list_url = '{% url "contact-list" %}';
+    var initialData = {};
+    initialData.contactListUrl = '{% url "contact-list" %}';
     initialData.tagListUrl = '{% url "tag-list" %}';
-    window.initial_data = initial_data;
+    window.initialData = initialData;
+    console.log('window data', window.initialData)
 </script> {% render_bundle 'contact-main' %} {% endblock %}

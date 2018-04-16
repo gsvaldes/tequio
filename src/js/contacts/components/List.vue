@@ -2,11 +2,6 @@
   <div>
     <h1>Contact List</h1>
     <v-client-table :columns="columns" :data="contacts" :options="options" id="client-table">
-      <div slot="afterFilter" >
-        <button class="btn btn-outline-primary" id="create-button">
-          <a href="/create">Add New Contact</a>
-        </button> 
-      </div>
       <div slot="name" slot-scope="props">
         <router-link 
           :to="{ name: 'detail', params: { id: props.row.id}}" 
@@ -50,7 +45,7 @@ export default {
   },
   created() {
     axios
-      .get(this.initial_data.contact_list_url)
+      .get(this.initialData.contactListUrl)
       .then(response => {
         console.log("response", response);
         this.contacts = response.data;

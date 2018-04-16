@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from core.views import HomeView
+from core.views import ContactsSPAView
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', ContactsSPAView.as_view(), name='contacts-spa'),
 ]

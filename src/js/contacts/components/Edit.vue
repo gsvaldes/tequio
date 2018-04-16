@@ -1,9 +1,5 @@
 <template>
     <div>
-      <h2>Available Tags</h2>
-        <ul>
-          <li v-for="(tagOption, index) in tagOptions" :key="index">{{ tagOption.name }}</li>
-        </ul>
         <form v-on:submit.prevent="updateContact">
           <p v-if="errors.length">
             <b>Please correct the following error(s):</b>

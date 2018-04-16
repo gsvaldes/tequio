@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^contacts/', include(contact_urls)),
     url(r'^districts/', include(districts_urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(url=reverse_lazy('home'))),
+    url(r'^$', RedirectView.as_view(url=reverse_lazy('contacts-spa'))),
 ]
 
 # Add Django site authentication urls (for login, logout, password management)
