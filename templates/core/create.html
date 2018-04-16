@@ -1,9 +1,0 @@
-{% extends 'base.html' %} {% load core_tags %} {% load render_bundle from webpack_loader %} {% block content %}
-
-<div id="app"></div>
-<script>
-    var initialData = {};
-    initialData.contactListUrl = '{% url "contact-list" %}';
-    initialData.tagListUrl = '{% url "tag-list" %}';
-    window.initialData = initialData;
-</script> {% render_bundle 'create-main' %} {% endblock %}

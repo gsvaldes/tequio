@@ -54,7 +54,6 @@
             </div>
         
             <br>
-            <span>Tags: {{ tags }}</span>
           </div>
           <button class="btn btn-primary" @click="updateContact">Update</button>
           <button class="btn btn-danger" @click="cancelUpdate">Cancel</button>

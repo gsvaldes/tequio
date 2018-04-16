@@ -5,9 +5,6 @@ var BundleTracker = require('webpack-bundle-tracker');
 module.exports = {
     entry: {
         'contact-main': './src/js/contacts/contact-main.js',
-        'list-main': './src/js/contacts/list/list-main.js',
-        'detail-main': './src/js/contacts/detail/detail-main.js',
-        'create-main': './src/js/contacts/create/create-main.js'
     },
     output: {
         path: path.resolve('./src/bundles/'),

@@ -1,10 +1,7 @@
 <template>
   <div>
     <h1>Add New Contact</h1>
-    <h2>Available Tags</h2>
-    <ul>
-      <li v-for="(tagOption, index) in tagOptions" :key="index">{{ tagOption.name }}</li>
-    </ul>
+    
     <form v-on:submit.prevent="addContact">
       <p v-if="errors.length">
         <b>Please correct the following error(s):</b>
@@ -55,7 +52,6 @@
         </div>
         
         <br>
-        <span>Tags: {{ tags }}</span>
       </div>
       <button
             class="btn btn-primary"

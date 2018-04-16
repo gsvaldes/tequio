@@ -5,5 +5,6 @@
 <script>
     var initial_data = {};
     initial_data.contact_list_url = '{% url "contact-list" %}';
+    initialData.tagListUrl = '{% url "tag-list" %}';
     window.initial_data = initial_data;
 </script> {% render_bundle 'contact-main' %} {% endblock %}
