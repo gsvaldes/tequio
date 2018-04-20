@@ -45,18 +45,23 @@
           <input type="text" class="form-control" v-model="phone.type" id="state">
         </div>
       </div>
-      <div class="form-group">
-        <div v-for="(tagOption, index) in tagOptions" :key="index">
-          <input type="checkbox" :id="tagOption.name" :value="tagOption.name" v-model="tags">
-          <label :for="tagOption.name">{{ tagOption.name }}</label>
+       <div class="form-group">
+         <label class="typo__label">Choose tags</label>
+          <multiselect
+            v-model="tags"
+            :options="tagOptions"
+            :multiple="true"
+            :close-on-select="false"
+            :searchable="true"
+            placeholder="Choose zero or more"
+          ></multiselect>
         </div>
         
         <br>
-      </div>
       <button
             class="btn btn-primary"
             @click.prevent="addContact">Add Contact
-        </button>
+      </button>
     </form>
   </div>
 </template>
@@ -64,11 +69,15 @@
 <script>
 import axios from "axios";
 import _ from "lodash";
+import Multiselect from 'vue-multiselect'
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default {
+  components: {
+    Multiselect
+  },
   data() {
     return {
       msg: "Initial create setup",
@@ -78,7 +87,7 @@ export default {
       email: {},
       tagOptions: [],
       tags: [],
-      errors: []
+      errors: [],
     };
   },
   created() {
@@ -101,10 +110,6 @@ export default {
       axios
         .post('/contacts/contacts/', this.contact)
         .then(response => {
-          console.log("response", response);
-          console.log("data", response.data);
-          console.log("url", response.data.url);
-          console.log("id", response.data.id);
           this.navegateToDetail(response.data.id);
         })
         .catch(e => {
@@ -119,8 +124,7 @@ export default {
       axios
         .get('/contacts/tags')
         .then(response => {
-          console.log("response", response);
-          this.tagOptions = response.data;
+          this.tagOptions = _.map(response.data, 'name')
         })
         .catch(e => {
           console.log("errors", e);
@@ -129,7 +133,7 @@ export default {
   }
 };
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
 h1,
 h2 {
