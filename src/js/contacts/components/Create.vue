@@ -108,7 +108,7 @@ export default {
         return;
       }
       axios
-        .post('/contacts/contacts/', this.contact)
+        .post(this.initialData.contactListUrl, this.contact)
         .then(response => {
           this.navegateToDetail(response.data.id);
         })

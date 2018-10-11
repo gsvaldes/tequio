@@ -54,7 +54,8 @@ export default {
   methods: {
     getContactDetails() {
       axios
-        .get("/contacts/contacts/" + this.id)
+        // .get("/contacts/contacts/" + this.id)
+        .get(this.initialData.contactDetailUrl + this.id)
         .then(response => {
           console.log("response", response);
           this.contact = response.data;

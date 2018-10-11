@@ -1,11 +1,15 @@
-{% extends 'base.html' %} {% load render_bundle from webpack_loader %} {% block content %}
+{% extends 'base.html' %} 
+{% load render_bundle from webpack_loader %} 
+{% block content %}
 
-<div>{{data}}</div>
 <div id="app"></div>
 <script>
     var initialData = {};
     initialData.contactListUrl = '{% url "contact-list" %}';
+    {% comment %} initialData.contactDetailUrl = '{% url "contact-detail" %}';  {% endcomment %} // TODO does not work, need argument
     initialData.tagListUrl = '{% url "tag-list" %}';
     window.initialData = initialData;
-    console.log('window data', window.initialData)
-</script> {% render_bundle 'contact-main' %} {% endblock %}
+</script> 
+
+{% render_bundle 'contact-main' %}
+{% endblock %}
