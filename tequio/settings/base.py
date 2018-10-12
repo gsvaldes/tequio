@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'webpack_loader',
+    'django_js_reverse',
 ]
 
 LOCAL_APPS = [
@@ -156,3 +157,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+
+# django-js-reverse
+JS_REVERSE_OUTPUT_PATH = str(ROOT_DIR('static')) + '/django_js_reverse/js'
