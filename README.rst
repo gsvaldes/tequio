@@ -49,7 +49,6 @@ When a new TequioUser is created via the admin page, an initial random,
 unknowable password is created and the new user is sent a password
 reset email. 
 
-
 Front End
 +++++++++
 

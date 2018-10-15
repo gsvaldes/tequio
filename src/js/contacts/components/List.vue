@@ -45,7 +45,7 @@ export default {
   },
   created() {
     axios
-      .get(this.initialData.contactListUrl)
+      .get(this.initialData.Urls.contact_list())
       .then(response => {
         console.log("response", response);
         this.contacts = response.data;
