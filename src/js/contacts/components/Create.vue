@@ -35,7 +35,10 @@
         <label for="name">Email</label>
         <input type="text" class="form-control" v-model="email.email" id="name">
       </div>
-      <div class="form-row">
+      <teq-phone v-for="(phone, index) in phones" :key="index" v-bind:phone="phone" >
+      </teq-phone>
+      <button @click.prevent="addPhone">Add phone</button>
+      <!-- <div class="form-row">
         <div class="form-group col-md-6">
           <label for="city">Phone</label>
           <input type="text" class="form-control" v-model="phone.number" id="city">
@@ -44,7 +47,7 @@
           <label for="state">Type</label>
           <input type="text" class="form-control" v-model="phone.type" id="state">
         </div>
-      </div>
+      </div> -->
        <div class="form-group">
          <label class="typo__label">Choose tags</label>
           <multiselect
@@ -63,6 +66,10 @@
             @click.prevent="addContact">Add Contact
       </button>
     </form>
+    <div v-for="(phone, index) in phones" :key="index">
+      <div>Number: {{phone.number}}</div>
+      <div>Type: {{phone.type}}</div>
+    </div>
   </div>
 </template>
 
@@ -70,20 +77,22 @@
 import axios from "axios";
 import _ from "lodash";
 import Multiselect from 'vue-multiselect'
+import teqPhone from './form/Phone.vue'
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default {
   components: {
-    Multiselect
+    Multiselect,
+    teqPhone
   },
   data() {
     return {
       msg: "Initial create setup",
       contact: {},
       address: {},
-      phone: {},
+      phones: [{}],
       email: {},
       tagOptions: [],
       tags: [],
@@ -101,7 +110,8 @@ export default {
     addContact() {
       this.contact.addresses = _.isEmpty(this.address) ? [] : [this.address];
       this.contact.emails = _.isEmpty(this.email) ? [] : [this.email];
-      this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
+      // this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
+      this.contact.phones = this.phones;
       this.contact.tags = this.tags;
       this.validateForm();
       if (this.errors.length) {
@@ -129,6 +139,9 @@ export default {
         .catch(e => {
           console.log("errors", e);
         });
+    },
+    addPhone() {
+      this.phones.push({});
     }
   }
 };
