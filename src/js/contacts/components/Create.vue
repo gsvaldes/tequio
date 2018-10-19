@@ -35,19 +35,13 @@
         <label for="name">Email</label>
         <input type="text" class="form-control" v-model="email.email" id="name">
       </div>
-      <teq-phone v-for="(phone, index) in phones" :key="index" v-bind:phone="phone" >
+      <teq-phone 
+        v-for="(phone, index) in phones" 
+        :key="index" 
+        v-bind:phone="phone" 
+        v-on:remove="removePhone(index)" >
       </teq-phone>
-      <button @click.prevent="addPhone">Add phone</button>
-      <!-- <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="city">Phone</label>
-          <input type="text" class="form-control" v-model="phone.number" id="city">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="state">Type</label>
-          <input type="text" class="form-control" v-model="phone.type" id="state">
-        </div>
-      </div> -->
+      <button @click.prevent="addPhone" class="btn__add-element">Add phone</button>
        <div class="form-group">
          <label class="typo__label">Choose tags</label>
           <multiselect
@@ -69,6 +63,7 @@
     <div v-for="(phone, index) in phones" :key="index">
       <div>Number: {{phone.number}}</div>
       <div>Type: {{phone.type}}</div>
+      <div>Index: {{index}}</div>
     </div>
   </div>
 </template>
@@ -142,15 +137,29 @@ export default {
     },
     addPhone() {
       this.phones.push({});
+    },
+    removePhone(index) {
+      this.phones.splice(index, 1);
     }
   }
 };
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
-h1,
-h2 {
-  font-weight: normal;
-  color: purple;
-}
+  h1,
+  h2 {
+    font-weight: normal;
+    color: purple;
+  }
+
+  .btn__add-element {
+    color:white;
+    background: green;
+  }
+
+  .btn__add-element:hover {
+    color:green;
+    background: white;
+    border: solid green 2px;
+  }
 </style>
