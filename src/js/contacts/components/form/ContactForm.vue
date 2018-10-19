@@ -64,97 +64,12 @@
 </template>
 
 <script>
-import axios from "axios";
-import _ from "lodash";
-import Multiselect from 'vue-multiselect'
-import teqPhone from './form/Phone.vue'
-
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-
 export default {
-  components: {
-    Multiselect,
-    teqPhone
-  },
-  data() {
-    return {
-      msg: "Initial create setup",
-      contact: {},
-      address: {},
-      phones: [{}],
-      email: {},
-      tagOptions: [],
-      tags: [],
-      errors: [],
-    };
-  },
-  created() {
-    this.getTags();
-  },
-  methods: {
-    validateForm() {
-      this.errors = [];
-      if (!this.contact.name) this.errors.push("Name required.");
-    },
-    addContact() {
-      this.contact.addresses = _.isEmpty(this.address) ? [] : [this.address];
-      this.contact.emails = _.isEmpty(this.email) ? [] : [this.email];
-      // this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
-      this.contact.phones = this.phones;
-      this.contact.tags = this.tags;
-      this.validateForm();
-      if (this.errors.length) {
-        return;
-      }
-      axios
-        .post(this.initialData.contactListUrl, this.contact)
-        .then(response => {
-          this.navegateToDetail(response.data.id);
-        })
-        .catch(e => {
-          console.log("errors", e);
-          this.errors.push(e);
-        });
-    },
-    navegateToDetail(id) {
-      this.$router.push({ name: 'detail', params: { id: id }});
-    },
-    getTags() {
-      axios
-        .get('/contacts/tags')
-        .then(response => {
-          this.tagOptions = _.map(response.data, 'name')
-        })
-        .catch(e => {
-          console.log("errors", e);
-        });
-    },
-    addPhone() {
-      this.phones.push({});
-    },
-    removePhone(index) {
-      this.phones.splice(index, 1);
-    }
-  }
-};
+    
+}
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style lang="scss">
-  h1,
-  h2 {
-    font-weight: normal;
-    color: purple;
-  }
 
-  .btn__add-element {
-    color:white;
-    background: green;
-  }
+<style>
 
-  .btn__add-element:hover {
-    color:green;
-    background: white;
-    border: solid green 2px;
-  }
 </style>
+

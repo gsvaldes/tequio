@@ -7,7 +7,6 @@
         <div class="form-group col-md-4">
           <label for="type">Type</label>
           <input type="text" class="form-control" v-model="phone.type">
-          <div>number {{phone.number}}</div>
         </div>
         <div class="form-group col-md-2">
             <button @click.prevent="remove" class="btn__remove">Remove</button>

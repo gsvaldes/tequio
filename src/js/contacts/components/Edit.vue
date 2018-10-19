@@ -106,7 +106,6 @@ export default {
       axios
         .get('/contacts/tags')
         .then(response => {
-          console.log("response", response);
           this.tagOptions = response.data;
         })
         .catch(e => {
