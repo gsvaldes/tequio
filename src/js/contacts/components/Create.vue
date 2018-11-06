@@ -100,7 +100,6 @@ export default {
     addContact() {
       this.contact.addresses = _.isEmpty(this.address) ? [] : [this.address];
       this.contact.emails = _.isEmpty(this.email) ? [] : [this.email];
-      // this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
       this.contact.phones = this.phones;
       this.contact.tags = this.tags;
       this.validateForm();

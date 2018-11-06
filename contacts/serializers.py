@@ -4,7 +4,7 @@ Serializers for Contact and related models
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
-from contacts.models import Contact, Address, Phone, Email, Tag
+from contacts.models import Contact, Address, Phone, Email, Tag, Note
 from users.models import TequioUser
 
 
@@ -200,3 +200,14 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
             instance.tags.set(tags_data)
 
         return instance
+
+
+class NoteSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Note Serializer
+    """
+    class Meta:
+        model = Note
+        fields = ('note', 'url', 'id', 'created_by', 'last_updated_by',
+                  'contact', 'last_updated_on'
+                  )
