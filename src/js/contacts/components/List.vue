@@ -10,7 +10,7 @@
       </div>
       <div slot="phones" slot-scope="props">
         <div v-for="(phone, index) in props.row.phones" :key="index">
-          {{phone.number | phone}}<span class="oi oi-eye"></span>
+          {{ phone.number | phone }}<span class="oi oi-eye"></span>
         </div>
       </div>
       <div slot="tags" slot-scope="props">
@@ -54,13 +54,6 @@ export default {
         console.log("errors", e);
         this.errors.push(e);
       });
-  },
-  filters: {
-    phone: function(value) {
-      return value
-        .replace(/\D+/g, "")
-        .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-    }
   }
 };
 </script>

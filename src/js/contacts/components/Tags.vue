@@ -17,7 +17,7 @@ export default {
     methods: {
         getTags() {
             axios
-                .get(this.initialData.tagListUrl)
+                .get(this.initialData.Urls.tag_list())
                 .then(response => {
                 console.log("response", response);
                 this.tags = _.map(response.data, 'name');

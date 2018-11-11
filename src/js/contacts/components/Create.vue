@@ -107,7 +107,7 @@ export default {
         return;
       }
       axios
-        .post(this.initialData.contactListUrl, this.contact)
+        .post(this.initialData.Urls.contact_list(), this.contact)
         .then(response => {
           this.navegateToDetail(response.data.id);
         })
@@ -121,7 +121,7 @@ export default {
     },
     getTags() {
       axios
-        .get('/contacts/tags')
+        .get(this.initialData.Urls.tag_list())
         .then(response => {
           this.tagOptions = _.map(response.data, 'name')
         })

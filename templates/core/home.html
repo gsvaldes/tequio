@@ -7,10 +7,7 @@
 <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 <script>
     var initialData = {};
-    initialData.contactListUrl = '{% url "contact-list" %}';
     initialData.Urls = Urls;
-    {% comment %} initialData.contactDetailUrl = '{% url "contact-detail" %}';  {% endcomment %} // TODO does not work, need argument
-    initialData.tagListUrl = '{% url "tag-list" %}';
     window.initialData = initialData;
 </script> 
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Edit Contact</h1>
         <form v-on:submit.prevent="updateContact">
           <p v-if="errors.length">
             <b>Please correct the following error(s):</b>
@@ -33,7 +34,7 @@
             <label for="name">Email</label>
             <input type="text" class="form-control" v-model="email.email" id="name">
           </div>
-          <div class="form-row">
+          <!-- <div class="form-row">
             <div class="form-group col-md-6">
               <label for="city">Phone</label>
               <input type="text" class="form-control" v-model="phone.number" id="city">
@@ -42,17 +43,29 @@
               <label for="state">Type</label>
               <input type="text" class="form-control" v-model="phone.type" id="state">
             </div>
-          </div>
+          </div> -->
+          <teq-phone 
+            v-for="(phone, index) in phones" 
+            :key="index" 
+            v-bind:phone="phone" 
+            v-on:remove="removePhone(index)" >
+          </teq-phone>
+          <button @click.prevent="addPhone" class="btn__add-element">Add phone</button>
           <div class="form-group">
-            <div v-for="(tagOption, index) in tagOptions" :key="index">
-              <input type="checkbox" :id="tagOption.name" :value="tagOption.name" v-model="tags">
-              <label :for="tagOption.name">{{ tagOption.name }}</label>
+            <label class="typo__label">Choose tags</label>
+              <multiselect
+                v-model="tags"
+                :options="tagOptions"
+                :multiple="true"
+                :close-on-select="false"
+                :searchable="true"
+                placeholder="Choose zero or more"
+              ></multiselect>
             </div>
-        
             <br>
-          </div>
           <button class="btn btn-primary" @click="updateContact">Update</button>
           <button class="btn btn-danger" @click="cancelUpdate">Cancel</button>
+          
         </form>
     </div>
 </template>
@@ -63,7 +76,14 @@ import _ from "lodash";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
+import Multiselect from 'vue-multiselect'
+import teqPhone from './form/Phone.vue'
+
 export default {
+  components: {
+    Multiselect,
+    teqPhone
+  },
   data() {
     return {
       id: this.$route.params.id,
@@ -71,7 +91,7 @@ export default {
       errors: [],
       tagOptions: [],
       address: {},
-      phone: {},
+      phones: [{}],
       email: {},
       tags: []
     };
@@ -85,16 +105,15 @@ export default {
   methods: {
     getContactDetails() {
       axios
-        .get("/contacts/contacts/" + this.id)
+        .get(this.initialData.Urls.contact_detail(this.id))
         .then(response => {
           this.contact = response.data;
           this.address = _.isEmpty(this.contact.addresses) ? {} : this.contact.addresses[0];
           this.email = _.isEmpty(this.contact.emails) ? {} : this.contact.emails[0];
-          this.phone = _.isEmpty(this.contact.phones) ? {} : this.contact.phones[0];
+          this.phones = _.isEmpty(this.contact.phones) ? [{}] : this.contact.phones;
           this.tags = this.contact.tags;
         })
         .catch(e => {
-          console.log("errors", e);
           this.errors.push(e);
         });
     },
@@ -104,9 +123,9 @@ export default {
     },
     getTags() {
       axios
-        .get('/contacts/tags')
+        .get(this.initialData.Urls.tag_list())
         .then(response => {
-          this.tagOptions = response.data;
+          this.tagOptions = _.map(response.data, 'name')
         })
         .catch(e => {
           console.log("errors", e);
@@ -118,28 +137,29 @@ export default {
     updateContact() {
       this.contact.addresses = _.isEmpty(this.address) ? [] : [this.address];
       this.contact.emails = _.isEmpty(this.email) ? [] : [this.email];
-      this.contact.phones = _.isEmpty(this.phone) ? [] : [this.phone];
+      this.contact.phones = this.phones;
       this.contact.tags = this.tags;
       this.validateForm();
       if (this.errors.length) {
         return;
       }
       axios
-        .put('/contacts/contacts/' + this.contact.id + '/', this.contact)
+        .put(this.initialData.Urls.contact_detail(this.id), this.contact)
         .then(response => {
-          console.log("response", response);
-          console.log("data", response.data);
-          console.log("url", response.data.url);
-          console.log("id", response.data.id);
           this.navegateToDetail(response.data.id);
         })
         .catch(e => {
-          console.log("errors", e);
           this.errors.push(e);
         });
     },
     cancelUpdate() {
       this.navegateToDetail();
+    },
+    addPhone() {
+      this.phones.push({});
+    },
+    removePhone(index) {
+      this.phones.splice(index, 1);
     }
   },
   created() {
@@ -148,6 +168,7 @@ export default {
   },
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 
 </style>

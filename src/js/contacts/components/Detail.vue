@@ -4,23 +4,32 @@
             <div class="card-header bg-transparent">{{contact.name}}</div>
             <div class="card-body">
                 <h5 class="card-title">Address</h5>
-                <address v-for="address in contact.addresses" :key=address.id>
-                    <div>{{address.address}}</div>
-                    <div>{{address.city}} {{address.state}} {{address.zip_code}} {{address.country}}</div>      
+                <address 
+                    v-for="address in contact.addresses" 
+                    :key="address.id + '-address'">
+                    <div>{{ address.address }}</div>
+                    <div>{{ address.city }} {{address.state}} {{address.zip_code}} {{address.country}}</div>      
                 </address>
                 <hr>
                 <h5 class="card-title">Emails</h5>
-                <div v-for="email in contact.emails" :key=email.id>
-                    {{email.email}}
+                <div 
+                    v-for="email in contact.emails" 
+                    :key="email.id + '-email'">
+                    {{ email.email }}
                 </div>
                 <hr>
                 <h5 class="card-title">Phones</h5>
-                <div v-for="phone in contact.phones" :key=phone.id>
-                    {{phone.number|phone}}
+                <div 
+                    v-for="phone in contact.phones" 
+                    :key="phone.id + '-phone'">
+                    {{ phone.number | phone }}
                 </div>
                 <hr>
                 <h5 class="card-title">Tags</h5>
-                <span class="badge badge-info tag" v-for="tag in contact.tags" :key=tag.id>
+                <span 
+                    class="badge badge-info tag" 
+                    v-for="tag in contact.tags" 
+                    :key="tag.id + '-tag'">
                     {{tag}}
                 </span>
             </div>
@@ -54,8 +63,7 @@ export default {
   methods: {
     getContactDetails() {
       axios
-        .get("/contacts/contacts/" + this.id)
-        // .get(this.initialData.contactDetailUrl + this.id)
+        .get(this.initialData.Urls.contact_detail(this.id))
         .then(response => {
           console.log("response", response);
           this.contact = response.data;
@@ -69,13 +77,6 @@ export default {
   created() {
     console.log("created");
     this.getContactDetails();
-  },
-  filters: {
-    phone: function(value) {
-      return value
-        .replace(/\D+/g, "")
-        .replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-    }
   }
 };
 </script>
