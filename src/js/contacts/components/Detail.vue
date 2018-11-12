@@ -65,7 +65,6 @@ export default {
       axios
         .get(this.initialData.Urls.contact_detail(this.id))
         .then(response => {
-          console.log("response", response);
           this.contact = response.data;
         })
         .catch(e => {
@@ -75,7 +74,6 @@ export default {
     }
   },
   created() {
-    console.log("created");
     this.getContactDetails();
   }
 };
