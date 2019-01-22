@@ -1,13 +1,13 @@
 {% extends 'base.html' %} 
 {% load render_bundle from webpack_loader %} 
+{% load static %}
 {% block content %}
 
 <div id="app"></div>
+<script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
 <script>
     var initialData = {};
-    initialData.contactListUrl = '{% url "contact-list" %}';
-    {% comment %} initialData.contactDetailUrl = '{% url "contact-detail" %}';  {% endcomment %} // TODO does not work, need argument
-    initialData.tagListUrl = '{% url "tag-list" %}';
+    initialData.Urls = Urls;
     window.initialData = initialData;
 </script> 
 

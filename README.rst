@@ -33,8 +33,9 @@ The ``TequioUser model`` subclasses Django's ``AbstractUser`` model, but does no
 any additional fields or functionality.
 
 Contacts, Members, Volunteers, etc. are not tied to the User model.  It's
-expected that organization members who have access to the site, and hence have TequioUser record,
-are a limited subset of an organization's members and volunteers.
+expected that organization members who have access to the site, and hence have
+a TequioUser record, are a limited subset of an organization's members
+ and volunteers.
 
 User Creation
 -------------
@@ -47,7 +48,6 @@ although, Tequio does not use django-authools itself.
 When a new TequioUser is created via the admin page, an initial random, 
 unknowable password is created and the new user is sent a password
 reset email. 
-
 
 Front End
 +++++++++

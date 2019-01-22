@@ -10,6 +10,8 @@ router.register(r'addresses', views.AddressViewSet)
 router.register(r'phones', views.PhoneViewSet)
 router.register(r'emails', views.EmailViewSet)
 router.register(r'tags', views.TagViewSet)
+router.register(r'notes', views.NoteViewSet)
+router.register(r'contact-notes', views.ContactNoteViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

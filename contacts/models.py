@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 from users.models import TequioUser
@@ -58,6 +59,7 @@ class Contact(models.Model):
     """
     Contact
     """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     # TODO null has no effect on many to many field
     addresses = models.ManyToManyField(Address, blank=True)
@@ -85,3 +87,34 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Note(models.Model):
+    """
+    Comments
+    """
+    contact = models.ForeignKey(
+        'Contact', related_name='notes', on_delete=models.CASCADE)
+    note = models.TextField()
+    created_by = models.ForeignKey(
+        TequioUser,
+        related_name="note_created_by",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_updated_by = models.ForeignKey(
+        TequioUser,
+        related_name="note_updated_by",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    last_updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        # TODO add formatted last_updated_on to str
+        return self.contact
+
+

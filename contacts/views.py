@@ -3,9 +3,10 @@ API views for Contact and related models
 """
 from rest_framework import viewsets
 
-from contacts.models import Contact, Address, Phone, Email, Tag
+from contacts.models import Contact, Address, Phone, Email, Tag, Note
 from contacts.serializers import ContactSerializer, UserSerializer, \
-    AddressSerializer, PhoneSerializer, EmailSerializer, TagSerializer
+    AddressSerializer, PhoneSerializer, EmailSerializer, TagSerializer, \
+    NoteSerializer
 from users.models import TequioUser
 
 
@@ -55,3 +56,27 @@ class TagViewSet(viewsets.ModelViewSet):
     """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+
+class NoteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows notes to be viewed or edited.
+    """
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
+
+class ContactNoteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint to return all notes for a given contact
+    """
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
+    def list(self, request):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        contact_id = self.kwargs['contact-id']
+        return Note.objects.filter(contact__id=contact_id)

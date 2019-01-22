@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue'
 import { ClientTable, Event } from 'vue-tables-2';
 import { routes } from './routes';
+import './filters.js';
 
 Vue.use(VueRouter);
 
