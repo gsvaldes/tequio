@@ -64,3 +64,19 @@ class NoteViewSet(viewsets.ModelViewSet):
     """
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
+
+
+class ContactNoteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint to return all notes for a given contact
+    """
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
+    def list(self, request):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        contact_id = self.kwargs['contact-id']
+        return Note.objects.filter(contact__id=contact_id)

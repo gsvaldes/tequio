@@ -1,7 +1,9 @@
 <template>
     <div>       
         <div class="card bg-transparent contact-details" >
-            <div class="card-header bg-transparent">{{contact.name}}</div>
+            <div class="card-header bg-transparent">
+              <h3 class="card-title">{{contact.name}}</h3>
+            </div>
             <div class="card-body">
                 <h5 class="card-title">Address</h5>
                 <address 
@@ -40,7 +42,8 @@
                     class="btn btn-primary"
                 >Edit Contact</router-link>
             </div>
-        </div>        
+        </div>   
+        <div v-for="note in contact.notes" :key="note.id + '-note'">{{ note.note }}</div>     
     </div>
 </template>
 <script>
@@ -65,6 +68,18 @@ export default {
       axios
         .get(this.initialData.Urls.contact_detail(this.id))
         .then(response => {
+          console.log('data: ', response.data);
+          this.contact = response.data;
+        })
+        .catch(e => {
+          console.log("errors", e);
+          this.errors.push(e);
+        });
+    },
+    getNotes() {
+      axios
+        .get(this.initialData.Urls.contact_notes(this.id))
+        .then(response => {
           this.contact = response.data;
         })
         .catch(e => {
@@ -75,6 +90,7 @@ export default {
   },
   created() {
     this.getContactDetails();
+    this.getNotes();
   }
 };
 </script>

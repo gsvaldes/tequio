@@ -64,6 +64,16 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'url', 'id', 'contacts')
 
 
+class NoteSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Note Serializer
+    """
+    class Meta:
+        model = Note
+        fields = ('note', 'url', 'id', 'created_by', 'last_updated_by',
+                  'contact', 'last_updated_on'
+                  )
+
 class ContactSerializer(serializers.HyperlinkedModelSerializer):
     """
     The Contact Serializer also updates the related
@@ -81,11 +91,12 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
         slug_field='name',
         required=False
     )
+    notes = NoteSerializer(read_only=True, many=True)
 
     class Meta:
         model = Contact
         fields = ('name', 'url', 'id', 'created_by', 'last_updated_by',
-                  'emails', 'addresses', 'phones', 'tags', 'member'
+                  'emails', 'addresses', 'phones', 'tags', 'member', 'notes'
                   )
 
     def create(self, validated_data):
@@ -201,13 +212,3 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
 
         return instance
 
-
-class NoteSerializer(serializers.HyperlinkedModelSerializer):
-    """
-    Note Serializer
-    """
-    class Meta:
-        model = Note
-        fields = ('note', 'url', 'id', 'created_by', 'last_updated_by',
-                  'contact', 'last_updated_on'
-                  )
